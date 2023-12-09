@@ -1,0 +1,154 @@
+<header class="fixed-top">
+    <nav class="navbar main-navbar @guest navbar-expand @else navbar-expand-none @endguest navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <div class="me-auto">
+                <form class="search-form" action="" method="get">
+                    <input type="text" name="" id="" class="form-control" placeholder="商品名">
+                    <button type="submit" class="btn btn-primary border">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+            @guest
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">まずはログイン</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">初めての方は<a href="{{ route('register') }}">こちら</a></span>
+                    </li>
+                </ul>
+            @else
+                <a href="#" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false">
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                        {{ Auth::user()->email }} 様
+                    </span>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{{ route('mypage.edit_info') }}" class="nav-link">
+                                会員情報編集
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mypage.edit_password') }}" class="nav-link">
+                                パスワード変更
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('customers.index') }}" class="nav-link">
+                                支払い情報の変更
+                            </a>
+                        </li>
+
+                        @if(Auth::user()->customers()->exists())
+                            @if(Auth::user()->subscriptions()->doesntExist())
+                                <li class="nav-item">
+                                    <a href="{{ route('verify.index', ['type' => 'subscription']) }}" class="nav-link">
+                                        有料会員申し込み
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                ログアウト
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endguest
+
+        </div>
+    </nav>
+    <nav class="navbar sub-navbar navbar-expand navbar-light shadow">
+        <div class="container">
+            <a href="#" class="text-light fw-bold text-decoration-none me-4" data-bs-toggle="modal" data-bs-target="#navbar-modal">
+                <i class="fa-solid fa-bars"></i>
+                商品を探す
+            </a>
+
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item me-2">
+                    <a href="" class="nav-link p-0">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        注文履歴
+                    </a>
+                </li>
+                <li class="nav-item me-2">
+                    <a href="" class="nav-link p-0">
+                        <i class="fa-solid fa-heart"></i>
+                        お気に入り
+                    </a>
+                </li>
+                <li class="nav-item me-2">
+                    <a href="" class="nav-link p-0">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        カート
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+{{-- Navbar Modal --}}
+<div class="modal fade" id="navbar-modal" tabindex="-1" data-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 mb-3">
+
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-10">
+                                    <form action="" method="get" class="search-form d-flex">
+                                        <input type="text" name="" id="" class="form-control" placeholder="商品名">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-2 text-end">
+                                    <a href="#" data-bs-dismiss="modal">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                        閉じる
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10">
+                            <h6>全カテゴリー</h6>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Logout Modal --}}
+<div class="modal fade" id="logoutModal" tabindex="-1" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">ログアウトしますか？</div>
+            <div class="modal-footer">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <span class="btn btn-sm btn-secondary" data-bs-dismiss="modal">閉じる</span>
+                    <button type="submit" class="btn btn-sm btn-danger">ログアウト</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

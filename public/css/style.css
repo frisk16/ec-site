@@ -1,0 +1,131 @@
+:root {
+    --bg-color: #ccc;
+    --sub-dark-color: #555;
+    --label-color: #00f;
+}
+
+body {
+    background-color: var(--bg-color) !important;
+}
+
+main {
+    margin-top: 128px;
+}
+
+p, li, ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.col-form-label::after {
+    display: block;
+    content: '---------------';
+    font-weight: bold;
+    color: var(--label-color);
+}
+
+.title {
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--sub-dark-color);
+}
+
+.card {
+    border-radius: 0 !important;
+}
+
+.card-header {
+    border-radius: 0 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.modal-content {
+    border-radius: 4px !important;
+}
+
+.modal-content a,
+.navbar-toggler {
+    text-decoration: none;
+    border: none !important;
+    color: var(--sub-dark-color);
+}
+
+.btn {
+    border-radius: 4px !important;
+}
+
+.search-form {
+    margin-left: 0;
+    display: flex;
+}
+
+.search-form > input[type="text"] {
+    width: calc(100% - 64px);
+    border-radius: 4px 0 0 4px;
+}
+
+.search-form > button {
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.main-navbar {
+    background-color: #eee;
+}
+
+.sub-navbar {
+    background-color: var(--sub-dark-color);
+}
+
+.sub-navbar a {
+    color: #eee;
+}
+
+/* credit_card Page */
+.card-area {
+    position: relative;
+}
+
+.card-items:hover {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.card-items .card {
+    border-radius: 8px !important;
+    cursor: pointer;
+}
+
+.card-items.active .card-body {
+    color: #00f;
+}
+
+.card-items.active .col-2::after {
+    content: '◀◀';
+}
+
+.card-views {
+    display: none;
+    position: absolute;
+    right: 16px;
+    left: 16px;
+}
+
+/* Phone Size */
+@media screen and (max-width: 767px) {
+
+    p, span, strong, small, label, a {
+        font-size: 0.7rem !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 0.9rem !important;
+    }
+
+    .search-form {
+        display: none;
+    }
+
+    .item-area {
+        padding-top: 160px;
+    }
+}
