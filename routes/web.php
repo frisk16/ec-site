@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
@@ -65,6 +66,9 @@ Route::controller(SubscriptionController::class)->middleware(['auth', 'verified'
         Route::get('mypage/subscription', 'index')->name('subscriptions.index');
         Route::post('mypage/subscription', 'register')->name('subscriptions.register');
         Route::get('mypage/subscription_complete', 'complete')->name('subscriptions.complete');
+        Route::get('mypage/cancel_subscription', 'cancel_subscription')->name('subscriptions.cancel');
+        Route::post('mypage/cancel_subscription', 'disabled_subscription')->name('subscriptions.disabled');
+        Route::get('mypage/complete_cancel_sub', 'complete_cancel')->name('subscriptions.complete_cancel');
     });
 
 // パスワード＆トークン検証関連

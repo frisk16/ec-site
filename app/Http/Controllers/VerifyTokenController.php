@@ -14,7 +14,7 @@ class VerifyTokenController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->type !== 'subscription') {
+        if($request->type !== 'subscription' && $request->type !== 'cancel_subscription') {
             return to_route('verify.token_error');
         }
 
@@ -25,7 +25,6 @@ class VerifyTokenController extends Controller
     {
         return view('verify.token_error');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -52,40 +51,10 @@ class VerifyTokenController extends Controller
 
         if($request->input('type') === 'subscription') {
             return redirect()->to('mypage/subscription?token='.$token);
+        } elseif($request->input('type') === 'cancel_subscription') {
+            return redirect()->to('mypage/cancel_subscription?token='.$token);
         } else {
             return to_route('verify.token_error');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(VerifyToken $verifyToken)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(VerifyToken $verifyToken)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, VerifyToken $verifyToken)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(VerifyToken $verifyToken)
-    {
-        //
     }
 }

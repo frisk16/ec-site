@@ -42,7 +42,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'area',
         'address',
         'phone_number',
-        'deleted_flag'
+        'cancel_flag',
+        'deleted_flag',
     ];
 
     /**

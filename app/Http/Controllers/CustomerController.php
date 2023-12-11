@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\StripeClient;
 
 class CustomerController extends Controller
 {
+    private $stripe;
+
     public function __construct()
     {
         $this->stripe = new StripeClient(config('stripe.secret_key'));
@@ -21,7 +24,15 @@ class CustomerController extends Controller
     {
         $user = Auth::user();
 
-        return view('mypage.credit_card', compact('user'));
+        if(Auth::user()->subscriptions()->where('period_end_at', null)->exists()) {
+            $sub_card = Auth::user()->subscriptions()->where('period_end_at', null)->first()->customer()->first();
+        } else {
+            $sub_card = null;
+        }
+
+        $cancel_card = Auth::user()->subscriptions()->orderBy('period_end_at', 'DESC')->first()->customer()->first();
+
+        return view('mypage.credit_card', compact('user', 'sub_card', 'cancel_card'));
     }
 
     /**
@@ -30,9 +41,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $my_cards = $user->customers();
+        $my_cards = Customer::where('user_id', $user->id)->get();
 
-        if($my_cards->get()->count() < 2) {
+        if($my_cards->count() < 2) {
             $token = $request->input('stripeToken');
             $input_data = $this->stripe->tokens->retrieve($token)->card;
             $input_name = $user->last_name . ' ' . $user->first_name;
@@ -55,9 +66,10 @@ class CustomerController extends Controller
             $customer->last4_number = $input_data->last4;
             $customer->brand = $input_data->brand;
             $customer->exp = $input_data->exp_month . '/' . $input_data->exp_year;
-            if(!$my_cards->where('enabled', true)->doesntExist()) {
+            if($my_cards->count() === 0) {
                 $customer->enabled = true;
             }
+            
             $customer->save();
 
             return back()->with('success_msg', 'カードが追加されました');
@@ -74,7 +86,7 @@ class CustomerController extends Controller
      */
     public function update_enabled(Customer $customer)
     {
-        $enabled_customer = Auth::user()->customers()->where('enabled', true)->first();
+        $enabled_customer = Auth::user()->customers->where('enabled', true)->first();
         $enabled_customer->enabled = false;
         $enabled_customer->update();
 
@@ -92,7 +104,7 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         if($customer->enabled) {
-            $disabled_customer = Auth::user()->customers()->where('enabled', false)->first();
+            $disabled_customer = Auth::user()->customers->where('enabled', false)->first();
             $disabled_customer->enabled = true;
             $disabled_customer->update();
         }

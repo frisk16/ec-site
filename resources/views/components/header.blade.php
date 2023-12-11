@@ -48,7 +48,7 @@
                         </li>
 
                         @if(Auth::user()->customers()->exists())
-                            @if(Auth::user()->subscriptions()->doesntExist())
+                            @if(!Auth::user()->cancel_flag && Auth::user()->subscriptions()->where('period_end_at', null)->doesntExist())
                                 <li class="nav-item">
                                     <a href="{{ route('verify.index', ['type' => 'subscription']) }}" class="nav-link">
                                         有料会員申し込み

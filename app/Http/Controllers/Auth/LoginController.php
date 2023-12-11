@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,16 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $today = Carbon::now()->toDateString();
+        $period_end_at = $user->subscriptions()->orderBy('period_end_at', 'DESC')->first()->period_end_at;
+        if($today === $period_end_at) {
+            $user->role_id = 1;
+            $user->cancel_flag = false;
+            $user->update();
+        }
     }
 }

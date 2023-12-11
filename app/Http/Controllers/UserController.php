@@ -33,7 +33,8 @@ class UserController extends Controller
      */
     public function update_info(UserRequest $request)
     {
-        $user = Auth::user();
+        $id = Auth::id();
+        $user = User::find($id);
 
         $user->email = $request->input('email');
         $user->last_name = $request->input('last_name');
@@ -55,7 +56,8 @@ class UserController extends Controller
 
     public function update_password(Request $request)
     {
-        $user = Auth::user();
+        $id = Auth::id();
+        $user = User::find($id);
 
         if(!password_verify($request->input('current_password'), $user->password)) {
             return back()->with('error_password', '現在のパスワードが一致しません');

@@ -14,6 +14,11 @@
                 <p><span class="fw-bold text-danger">月額￥300円</span>からお申し込み頂けるプランです。</p>
                 <p>支払い方法を以下の登録済みカードから選択してください。</p>
 
+                <p class="text-danger fw-bold mt-3">※注意</p>
+                <ul class="text-primary">
+                    <li>月額払いで使用するカードは、有料会員登録中は削除できなくなります、ご注意ください</li>
+                </ul>
+
                 <form action="{{ route('subscriptions.register') }}" method="post" class="d-flex flex-column">
                     @csrf
 
@@ -31,6 +36,12 @@
                                             <i class="fa-4x {{ $customer->brand_icon }}"></i>
                                         </div>
                                         <div class="col-9">
+                                            @if($customer->enabled)
+                                            <p class="text-success">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                通常のショッピングで使用中
+                                            </p>
+                                            @endif
                                             <h6>番号｜**** **** **** {{ $customer->last4_number }}</h6>
                                             <p>利用期限｜{{ $customer->exp }}</p>
                                         </div>

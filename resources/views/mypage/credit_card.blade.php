@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
 
-        <h5 class="title">支払い情報の追加、削除</h5>
+        <h5 class="title">支払いカードの追加、削除</h5>
 
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 card-area">
@@ -28,7 +28,7 @@
                                             @if($customer->enabled)
                                                 <span class="text-success">
                                                     <i class="fa-solid fa-circle-check"></i>
-                                                    使用中
+                                                    通常のショッピングで使用中
                                                 </span>
                                             @else
                                                 <span class="text-secondary">
@@ -39,7 +39,29 @@
                                             <h6>番号｜**** **** **** {{ $customer->last4_number }}</h6>
                                             <p>利用期限｜{{ $customer->exp }}</p>
                                             <div class="d-flex justify-content-end align-items-center mt-3">
-                                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除する</a>
+                                             
+                                                @if(Auth::user()->cancel_flag)
+                                                    @if(isset($cancel_card))
+                                                        @if($cancel_card->id === $customer->id)
+                                                            <a href="#" class="btn btn-danger btn-sm disabled">有料会員期間終了まで削除不可</a>
+                                                        @else
+                                                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除</a>
+                                                        @endif
+                                                    @else
+                                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除</a>
+                                                    @endif
+                                                @else
+                                                    @if(isset($sub_card))
+                                                        @if($sub_card->id === $customer->id)
+                                                            <a href="#" class="btn btn-danger btn-sm disabled">月額払いで使用中の為、削除不可</a>
+                                                        @else
+                                                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除</a>
+                                                        @endif
+                                                    @else
+                                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除</a>
+                                                    @endif
+                                                @endif
+                                                
                                                 @if(!$customer->enabled)
                                                     <p class="fw-bold fs-5">｜</p>
                                                     <form action="{{ route('customers.update_enabled', $customer) }}" method="post">
@@ -141,6 +163,46 @@
                 @endif
             </div>
         </div>
+
+        @if(isset($sub_card))
+
+        <h5 class="title mt-3">月額支払いで使用中のカード</h5>
+        <div class="row justify-content-center">
+            <div class="col-md-7 mt-3">
+                <div class="card shadow">
+                    <div class="card-header bg-primary d-flex justify-content-between">
+                        <p>{{ $sub_card->brand }}カード</p>
+                        <p>登録日｜{{ $sub_card->created_at }}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-3 text-end">
+                                <i class="fa-4x {{ $sub_card->brand_icon }}"></i>
+                            </div>
+                            <div class="col-9">
+                                <strong class="text-danger">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    月額￥300円支払いで使用中
+                                </strong>
+                                <h6>番号｜**** **** **** {{ $sub_card->last4_number }}</h6>
+                                <p>利用期限｜{{ $sub_card->exp }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mt-3">
+                <div class="card card-body shadow">
+                    <p>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        有料会員解約手続きは<a href="{{ route('verify.index', ['type' => 'cancel_subscription']) }}">こちら</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        @endif
+        
     </div>
 @endsection
 
