@@ -31,20 +31,21 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Auth::routes(['verify' => true]);
 
 // 確認メール再送信
-Route::post('/email/verification-notification', function(Request $request) {
+Route::post('email/verification-notification', function(Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
     return back()->with('success_msg', '確認メールを再送信しました、ご確認ください');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // パスワード再設定手続き完了ページ
-Route::get('/password/reset_complete', [HomeController::class, 'reset_complete'])
+Route::get('password/reset_complete', [HomeController::class, 'reset_complete'])
     ->middleware(['auth', 'verified'])
     ->name('password.reset_complete');
 
 // マイページ関連
 Route::controller(UserController::class)->middleware(['auth', 'verified'])
     ->group(function() {
+        Route::get('mypage', 'index')->name('mypage.index');
         Route::get('mypage/edit_info', 'edit_info')->name('mypage.edit_info');
         Route::put('mypage/edit_info', 'update_info')->name('mypage.update_info');
         Route::get('mypage/edit_password', 'edit_password')->name('mypage.edit_password');
@@ -74,8 +75,8 @@ Route::controller(SubscriptionController::class)->middleware(['auth', 'verified'
 // パスワード＆トークン検証関連
 Route::controller(VerifyTokenController::class)->middleware(['auth', 'verified'])
     ->group(function() {
-        Route::get('verify', 'index')->name('verify.index');
-        Route::post('verify', 'verify_token')->name('verify.token');
-        Route::get('verify/token_error', 'token_error')->name('verify.token_error');
+        Route::get('security/verify', 'index')->name('verify.index');
+        Route::post('security/verify', 'verify_token')->name('verify.token');
+        Route::get('security/verify/token_error', 'token_error')->name('verify.token_error');
     });
 

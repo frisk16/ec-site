@@ -37,13 +37,13 @@
                                                 </span>
                                             @endif
                                             <h6>番号｜**** **** **** {{ $customer->last4_number }}</h6>
-                                            <p>利用期限｜{{ $customer->exp }}</p>
+                                            <p>利用期限｜{{ $customer->custom_exp }}</p>
                                             <div class="d-flex justify-content-end align-items-center mt-3">
                                              
                                                 @if(Auth::user()->cancel_flag)
                                                     @if(isset($cancel_card))
                                                         @if($cancel_card->id === $customer->id)
-                                                            <a href="#" class="btn btn-danger btn-sm disabled">有料会員期間終了まで削除不可</a>
+                                                            <a href="#" class="btn btn-danger btn-sm disabled">解約手続き完了まで削除不可</a>
                                                         @else
                                                             <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-card-modal{{ $customer->id }}">削除</a>
                                                         @endif
@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        @if(isset($sub_card))
+        @if(isset($sub_card) || Auth::user()->cancel_flag)
 
         <h5 class="title mt-3">月額支払いで使用中のカード</h5>
         <div class="row justify-content-center">
@@ -185,7 +185,7 @@
                                     月額￥300円支払いで使用中
                                 </strong>
                                 <h6>番号｜**** **** **** {{ $sub_card->last4_number }}</h6>
-                                <p>利用期限｜{{ $sub_card->exp }}</p>
+                                <p>利用期限｜{{ $sub_card->custom_exp }}</p>
                             </div>
                         </div>
                     </div>
@@ -193,10 +193,20 @@
             </div>
             <div class="col-md-5 mt-3">
                 <div class="card card-body shadow">
-                    <p>
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        有料会員解約手続きは<a href="{{ route('verify.index', ['type' => 'cancel_subscription']) }}">こちら</a>
-                    </p>
+                    @if(Auth::user()->cancel_flag)
+                        <p class="text-center fw-bold">
+                            現在解約手続きが進行中です
+                        </p>
+                        <h5 class="text-center mt-3 text-decoration-underline text-danger">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            {{ $period_end_at }} まで支払い発生
+                        </h5>
+                    @else
+                        <p>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            有料会員解約手続きは<a href="{{ route('verify.index', ['type' => 'cancel_subscription']) }}">こちら</a>
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>

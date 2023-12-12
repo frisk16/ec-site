@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">テストページ</div>
+                <div class="card-header bg-quinary">TOPページ予定</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -18,7 +18,7 @@
                         </div>
                     @endif
 
-                    準備中
+                    ※現在準備中
                 </div>
             </div>
         </div>

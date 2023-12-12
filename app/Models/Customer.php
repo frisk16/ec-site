@@ -36,4 +36,11 @@ class Customer extends Model
             return $icons[$this->brand];
         }
     }
+
+    public function getCustomExpAttribute()
+    {
+        $exp_date = explode('/', $this->exp);
+
+        return $exp_date[1].'年'.' / '.$exp_date[0].'月';
+    }
 }

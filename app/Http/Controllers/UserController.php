@@ -6,15 +6,47 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Stripe\StripeClient;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
+    private $stripe;
+
+    public function __construct()
+    {
+        $this->stripe = new StripeClient(config('stripe.secret_key'));
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $sub_data = null;
+        $next_payment_at = null;
+        $sub_retrieve = null;
+        $use_card = null;
+
+        if($user->role->id === 2) {
+            if($user->cancel_flag) {
+                $end_date = $user->subscriptions()->orderBy('period_end_at', 'DESC')->first()->period_end_at;
+                $next_payment_at = Carbon::parse($end_date)->format('Y年m月d日');
+                $use_card = $user->customers()->where('enabled', true)->first();
+            } else {
+                $sub_code = $user->subscriptions()->where('period_end_at', null)->first()->sub_code;
+                $sub_retrieve = $this->stripe->subscriptions->retrieve($sub_code);
+                $next_payment_at = Carbon::parse($sub_retrieve->current_period_end)->format('Y年m月d日');
+                $use_card = $user->customers()->where('enabled', true)->first();
+            }
+        } else {
+            if($user->customers()->exists()) {
+                $use_card = $user->customers()->where('enabled', true)->first();
+            }
+        }
+
+        return view('mypage.index', compact('user', 'sub_retrieve', 'next_payment_at', 'use_card'));
     }
 
     /**
@@ -46,7 +78,7 @@ class UserController extends Controller
         $user->phone_number = $request->input('phone_number');
         $user->update();
 
-        return back()->with('success_msg', '会員情報が更新されました');
+        return to_route('mypage.index')->with('success_msg', '会員情報が更新されました');
     }
 
     public function edit_password()
@@ -73,15 +105,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->update();
 
-        return to_route('home')->with('success_msg', 'パスワードが更新されました');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
+        return to_route('mypage.index')->with('success_msg', 'パスワードが更新されました');
     }
 
     // 都道府県

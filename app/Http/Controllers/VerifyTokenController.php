@@ -14,7 +14,10 @@ class VerifyTokenController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->type !== 'subscription' && $request->type !== 'cancel_subscription') {
+        if($request->type !== 'subscription' &&
+            $request->type !== 'cancel_subscription' &&
+            $request->type !== 'customer'
+        ) {
             return to_route('verify.token_error');
         }
 
@@ -53,6 +56,8 @@ class VerifyTokenController extends Controller
             return redirect()->to('mypage/subscription?token='.$token);
         } elseif($request->input('type') === 'cancel_subscription') {
             return redirect()->to('mypage/cancel_subscription?token='.$token);
+        } elseif($request->input('type') === 'customer') {
+            return redirect()->to('mypage/credit_card?token='.$token);
         } else {
             return to_route('verify.token_error');
         }

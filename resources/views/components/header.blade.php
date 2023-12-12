@@ -32,6 +32,11 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <a href="{{ route('mypage.index') }}" class="nav-link">
+                                マイページへ
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('mypage.edit_info') }}" class="nav-link">
                                 会員情報編集
                             </a>
@@ -42,7 +47,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('customers.index') }}" class="nav-link">
+                            <a href="{{ route('verify.index', ['type' => 'customer']) }}" class="nav-link">
                                 支払い情報の変更
                             </a>
                         </li>

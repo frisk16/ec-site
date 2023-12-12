@@ -43,11 +43,13 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $today = Carbon::now()->toDateString();
-        $period_end_at = $user->subscriptions()->orderBy('period_end_at', 'DESC')->first()->period_end_at;
-        if($today === $period_end_at) {
-            $user->role_id = 1;
-            $user->cancel_flag = false;
-            $user->update();
+        if($user->subscriptions()->exists()) {
+            $period_end_at = $user->subscriptions()->orderBy('period_end_at', 'DESC')->first()->period_end_at;
+            if($today === $period_end_at) {
+                $user->role_id = 1;
+                $user->cancel_flag = false;
+                $user->update();
+            }
         }
     }
 }

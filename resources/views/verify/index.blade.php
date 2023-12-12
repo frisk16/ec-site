@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
 
-                <h5 class="title">確認の為、パスワードを入力してください</h5>
+                <h5 class="title">本人確認</h5>
 
                 <div class="card card-body shadow">
                     <form action="{{ route('verify.token') }}" method="post">

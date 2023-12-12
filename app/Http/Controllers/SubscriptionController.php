@@ -42,6 +42,14 @@ class SubscriptionController extends Controller
         }
         // 
 
+        if(Auth::user()->customers()->doesntExist()) {
+            return to_route('verify.token_error');
+        } else {
+            if(Auth::user()->role->id === 2) {
+                return to_route('verify.token_error');
+            }
+        }
+
         $customers = Auth::user()->customers()->get();
 
         return view('mypage.subscription', compact('customers'));
@@ -91,6 +99,7 @@ class SubscriptionController extends Controller
 
     public function cancel_subscription(Request $request)
     {
+        // トークン認証
         if($request->has('token')) {
             $my_token = VerifyToken::where('user_id', Auth::id());
             if($my_token->exists()) {
@@ -102,6 +111,15 @@ class SubscriptionController extends Controller
             }
         } else {
             return to_route('verify.token_error');
+        }
+        // 
+
+        if(Auth::user()->cancel_flag) {
+            return to_route('verify.token_error');
+        } else {
+            if(Auth::user()->role->id === 1) {
+                return to_route('verify.token_error');
+            }
         }
 
         return view('mypage.cancel_subscription');
@@ -156,7 +174,7 @@ class SubscriptionController extends Controller
             return to_route('subscriptions.complete_cancel');
 
         } else {
-            return to_route('customers.index')->with('error_msg', '既に有料会員を解約済みです');
+            return back()->with('error_msg', '既に有料会員を解約済みです');
         }
         
     }
@@ -168,6 +186,9 @@ class SubscriptionController extends Controller
 
         if(!isset($period_end_at)) {
             return to_route('verify.token_error');
+        } else {
+            $my_token = VerifyToken::where('user_id', Auth::id())->first();
+            $my_token->delete();
         }
 
         return view('mypage.complete_cancel_sub', compact('format_end_date'));

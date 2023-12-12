@@ -1,8 +1,50 @@
 :root {
     --bg-color: #ccc;
-    --sub-dark-color: #555;
     --label-color: #00f;
+    --disabled-color: #aaa;
+    --tertiary-color: #f80;
+    --quaternary-color: #f0f;
+    --quinary-color: #0af;
+    --senary-color: #555;
 }
+
+/* ----- colors ----- */
+.text-disabled {
+    color: var(--disabled-color);
+}
+.bg-disabled {
+    background-color: var(--disabled-color);
+}
+
+.text-tertiary {
+    color: var(--tertiary-color) !important;
+}
+.bg-tertiary {
+    background-color: var(--tertiary-color) !important;
+}
+
+.text-quaternary {
+    color: var(--quaternary-color) !important;
+}
+.bg-quaternary {
+    background-color: var(--quaternary-color) !important;
+}
+
+.text-quinary {
+    color: var(--quinary-color) !important;
+}
+.bg-quinary {
+    background-color: var(--quinary-color) !important;
+}
+
+.text-senary {
+    color: var(--senary-color) !important;
+}
+.bg-senary {
+    background-color: var(--senary-color) !important;
+}
+
+
 
 body {
     background-color: var(--bg-color) !important;
@@ -21,12 +63,13 @@ p, li, ul {
     display: block;
     content: '---------------';
     font-weight: bold;
-    color: var(--label-color);
+    color: var(--quinary-color);
 }
 
 .title {
     margin-bottom: 32px;
-    border-bottom: 1px solid var(--sub-dark-color);
+    border-bottom: 1px solid var(--senary-color);
+    font-weight: bold;
 }
 
 .card {
@@ -47,11 +90,20 @@ p, li, ul {
 .navbar-toggler {
     text-decoration: none;
     border: none !important;
-    color: var(--sub-dark-color);
+    color: var(--senary-color);
 }
 
 .btn {
     border-radius: 4px !important;
+}
+
+.mypage-btn {
+    text-decoration: none;
+    color: var(--senary-color);
+}
+
+.mypage-btn:hover {
+    opacity: 0.7;
 }
 
 .search-form {
@@ -73,7 +125,7 @@ p, li, ul {
 }
 
 .sub-navbar {
-    background-color: var(--sub-dark-color);
+    background-color: var(--senary-color);
 }
 
 .sub-navbar a {
