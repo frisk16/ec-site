@@ -27,7 +27,6 @@ use App\Http\Controllers\VerifyTokenController;
 // TOPページ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
 Auth::routes(['verify' => true]);
 
 // 確認メール再送信

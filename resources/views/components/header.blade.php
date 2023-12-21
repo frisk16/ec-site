@@ -132,8 +132,39 @@
 
                         </div>
                         <div class="col-md-10">
-                            <h6>全カテゴリー</h6>
-                            <hr>
+                            <h6 class="title m-2">全カテゴリー</h6>
+                            
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-lg-6">
+                                    <ul class="ms-2">
+                                        @foreach(App\Models\Category::all() as $category)
+                                        <li class="mb-3">
+                                            <a href="#">
+                                                {{ $category->name }}　( 全{{ $category->products()->count() }}品 )
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6 mt-4">
+                                    <h6 class="title mb-2">価格で絞る</h6>
+
+                                    <form action="" method="get">
+                                        <div class="form-group row mt-3">
+                                            <label for="price" class="col-12">
+                                                最大価格
+                                            </label>
+                                            <div class="col-12">
+                                                <select name="price" id="price" class="form-select">
+                                                    @for($i = 1000; $i <= 22000; $i += 3000)
+                                                        <option value="{{ $i }}">〜￥{{ $i }}円まで</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -17,8 +17,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    ※現在準備中
                 </div>
             </div>
         </div>
