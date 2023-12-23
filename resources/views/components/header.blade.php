@@ -136,12 +136,18 @@
                             
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-lg-6">
-                                    <ul class="ms-2">
-                                        @foreach(App\Models\Category::all() as $category)
-                                        <li class="mb-3">
-                                            <a href="#">
-                                                {{ $category->name }}　( 全{{ $category->products()->count() }}品 )
-                                            </a>
+                                    <ul class="row">
+                                        @foreach(App\Models\MajorCategory::all() as $major_category)
+                                        <li class="col-6 mb-3">
+                                            <strong>{{ $major_category->name }}</strong>
+
+                                            @foreach($major_category->categories()->get() as $category)
+                                            <div class="d-flex flex-wrap ms-2">
+                                                <a href="#">
+                                                    {{ $category->name }} ({{ $category->products()->count() }})
+                                                </a>
+                                            </div>
+                                            @endforeach
                                         </li>
                                         @endforeach
                                     </ul>

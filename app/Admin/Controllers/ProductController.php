@@ -27,16 +27,16 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('category.name', __('カテゴリー'));
         $grid->column('name', __('Name'));
         $grid->column('image', __('Image'))->image();
-        $grid->column('price', __('Price'));
-        $grid->column('carriage_flag', __('Carriage flag'));
-        $grid->column('recommend_flag', __('Recommend flag'));
-        $grid->column('public_flag', __('Public flag'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('price', __('Price'))->sortable();
+        $grid->column('carriage_flag', '送料')->editable('select', ['0' => '無', '1' => '有']);
+        $grid->column('recommend_flag', 'おすすめ')->editable('select', ['0' => '無', '1' => '有']);
+        $grid->column('public_flag', '公開')->editable('select', ['0' => '非公開', '1' => '可']);
+        $grid->column('created_at', __('Created at'))->sortable();
+        $grid->column('updated_at', __('Updated at'))->sortable();
 
         return $grid;
     }
@@ -56,10 +56,10 @@ class ProductController extends AdminController
         $show->field('name', __('Name'));
         $show->field('image', __('Image'));
         $show->field('price', __('Price'));
-        $show->field('description', __('Description'));
-        $show->field('carriage_flag', __('Carriage flag'));
-        $show->field('recommend_flag', __('Recommend flag'));
-        $show->field('public_flag', __('Public flag'));
+        $show->field('description', '商品内容');
+        $show->field('carriage_flag', '送料');
+        $show->field('recommend_flag', 'おすすめ');
+        $show->field('public_flag', '公開');
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -79,10 +79,10 @@ class ProductController extends AdminController
         $form->text('name', __('Name'));
         $form->image('image', __('Image'))->uniqueName();
         $form->number('price', __('Price'));
-        $form->textarea('description', __('Description'));
-        $form->switch('carriage_flag', __('Carriage flag'));
-        $form->switch('recommend_flag', __('Recommend flag'));
-        $form->switch('public_flag', __('Public flag'))->default(1);
+        $form->textarea('description', '商品内容');
+        $form->switch('carriage_flag', '送料');
+        $form->switch('recommend_flag', 'おすすめ');
+        $form->switch('public_flag', '公開')->default(1);
 
         return $form;
     }
