@@ -8,6 +8,8 @@
     --quinary-color: #0af;
     --senary-color: #555;
     --septenary-color: #ddd;
+
+    --topic-img-size: 320px;
 }
 
 /* ----- colors ----- */
@@ -93,7 +95,6 @@ a:hover {
     border-bottom: 1px solid var(--senary-color);
     font-weight: bold;
 }
-
 
 .img-gradation::before {
     content: "";
@@ -203,7 +204,10 @@ a:hover {
     top: 0;
 }
 
-
+#topic-carousel img {
+    height: var(--topic-img-size);
+    object-fit: cover;
+}
 
 /* Phone Size */
 @media screen and (max-width: 767px) {
@@ -227,6 +231,10 @@ a:hover {
 
     .item-area {
         padding-top: 160px;
+    }
+
+    #topic-carousel img {
+        height: calc(var(--topic-img-size) / 2);
     }
 
 }
