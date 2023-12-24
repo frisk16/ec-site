@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VerifyTokenController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +80,5 @@ Route::controller(VerifyTokenController::class)->middleware(['auth', 'verified']
         Route::get('security/verify/token_error', 'token_error')->name('verify.token_error');
     });
 
+// 商品カテゴリー
+Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');

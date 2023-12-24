@@ -77,7 +77,7 @@ class ProductController extends AdminController
 
         $form->select('category_id', 'カテゴリー')->options(Category::all()->pluck('name', 'id'));
         $form->text('name', __('Name'));
-        $form->image('image', __('Image'))->uniqueName();
+        $form->image('image', '画像 (縦320px)')->uniqueName();
         $form->number('price', __('Price'));
         $form->textarea('description', '商品内容');
         $form->switch('carriage_flag', '送料');

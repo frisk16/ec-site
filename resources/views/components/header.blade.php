@@ -143,7 +143,7 @@
 
                                             @foreach($major_category->categories()->get() as $category)
                                             <div class="d-flex flex-wrap ms-2">
-                                                <a href="#">
+                                                <a href="{{ route('categories.show', $category) }}">
                                                     {{ $category->name }} ({{ $category->products()->count() }})
                                                 </a>
                                             </div>
@@ -153,9 +153,23 @@
                                     </ul>
                                 </div>
                                 <div class="col-lg-6 mt-4">
-                                    <h6 class="title mb-2">価格で絞る</h6>
+                                    <h6 class="title mb-2">条件で絞る</h6>
 
                                     <form action="" method="get">
+                                        <div class="form-group row mt-3">
+                                            <label for="category_id" class="col-12">
+                                                カテゴリー
+                                            </label>
+                                            <div class="col-12">
+                                                <select name="category_id" id="category_id" class="form-select">
+
+                                                    @foreach(App\Models\Category::all() as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group row mt-3">
                                             <label for="price" class="col-12">
                                                 最大価格
@@ -166,6 +180,11 @@
                                                         <option value="{{ $i }}">〜￥{{ $i }}円まで</option>
                                                     @endfor
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end mt-3">
+                                            <div class="col-lg-4">
+                                                <button type="submit" class="btn btn-primary btn-sm w-100">検索</button>
                                             </div>
                                         </div>
                                     </form>

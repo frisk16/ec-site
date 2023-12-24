@@ -77,7 +77,7 @@
                 <h5>{{ $major->name }}</h5>
                 <ul class="ms-2">
                 @foreach($major->categories()->get() as $category)
-                    <li><a href="#" class="text-light text-decoration-none">{{ $category->name }} ({{ $category->products()->count() }})</a></li>
+                    <li><a href="{{ route('categories.show', $category) }}" class="text-light text-decoration-none">{{ $category->name }} ({{ $category->products()->count() }})</a></li>
                 @endforeach
                 </ul>
             </div>
