@@ -56,7 +56,7 @@
 
             @foreach($new_top10_products as $product)
             <div class="col-6 col-md-4 mb-3">
-                <a href="#">
+                <a href="{{ route('products.show', $product) }}">
                     <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow" alt="">
                 </a>
             </div>
@@ -94,7 +94,7 @@
 
             @foreach($recommend_products as $product)
             <div class="col-6 col-md-4 mb-3">
-                <a href="#">
+                <a href="{{ route('products.show', $product) }}">
                     <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid shadow">
                 </a>
             </div>

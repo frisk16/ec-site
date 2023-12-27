@@ -35,14 +35,14 @@
         {{-- Products Field --}}
         <div class="col-md-11 col-lg-9 col-xl-10">
             
-            <div class="card card-header mb-3 bg-senary">
+            <div class="card card-header mb-3 bg-senary shadow">
                 <h3 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $category->products()->count() }}品</span></h3>
             </div>
 
             <div class="row justify-content-start">
                 @foreach($products as $product)
                 <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
                         <div class="card product-card shadow">
                             <div class="card-body card-img">
                                 <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid">

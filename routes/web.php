@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VerifyTokenController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +83,6 @@ Route::controller(VerifyTokenController::class)->middleware(['auth', 'verified']
 
 // 商品カテゴリー
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+// 各商品ページ
+Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
