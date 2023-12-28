@@ -13,7 +13,7 @@
     --product-card-size: 560px;
 }
 
-/* ----- colors ----- */
+/* ----- Theme Colors ----- */
 .text-disabled {
     color: var(--disabled-color);
 }
@@ -57,7 +57,7 @@
 }
 
 
-
+/* ----- Defaults ----- */
 body {
     background-color: var(--bg-color) !important;
 }
@@ -84,6 +84,8 @@ a:hover {
     color: var(--quinary-color);
 }
 
+
+/* ----- Title Text ----- */
 .top-title {
     margin-bottom: 32px;
     border-bottom: 4px solid var(--text-color);
@@ -97,6 +99,8 @@ a:hover {
     font-weight: bold;
 }
 
+
+/* ----- Gradation Image ----- */
 .img-gradation::before {
     content: "";
     position: absolute;
@@ -108,6 +112,8 @@ a:hover {
     background: linear-gradient(0deg, var(--bg-color), transparent);
 }
 
+
+/* ----- Card Style ----- */
 .card {
     border-radius: 0 !important;
 }
@@ -118,6 +124,8 @@ a:hover {
     font-weight: bold;
 }
 
+
+/* Navbar Modal Style */
 .modal-content {
     border-radius: 4px !important;
 }
@@ -128,6 +136,8 @@ a:hover {
     border: none !important;
     color: var(--senary-color);
 }
+
+
 
 .btn {
     border-radius: 4px !important;
@@ -168,7 +178,8 @@ a:hover {
     color: #eee;
 }
 
-/* credit_card Page */
+
+/* ----- CreditCard Page ----- */
 .card-area {
     position: relative;
 }
@@ -198,6 +209,8 @@ a:hover {
     left: 16px;
 }
 
+
+/* ----- Product Page ----- */
 .product-card {
     height: var(--product-card-size) !important;
 }
@@ -220,7 +233,35 @@ a:hover {
     height: 20%;
 }
 
-/* Home Style */
+
+/* ----- Score Area ----- */
+.score-area {
+    position: relative;
+}
+
+.score::before {
+    content: '☆☆☆☆☆';
+    position: absolute;
+}
+
+.total-score::before {
+    content: '★★★★★';
+    position: absolute;
+}
+
+.total-score {
+    overflow: hidden;
+    position: absolute;
+    width: 0em;
+}
+
+.score-point {
+    position: absolute;
+    left: 5.5em;
+}
+
+
+/* ----- Home Page ----- */
 
 #top-carousel {
     position: absolute;
@@ -232,7 +273,9 @@ a:hover {
     object-fit: cover;
 }
 
-/* Phone Size */
+
+/* ---------------------- */
+/* ----- Phone Size ----- */
 @media screen and (max-width: 767px) {
 
     p, span, strong, small, label, a {

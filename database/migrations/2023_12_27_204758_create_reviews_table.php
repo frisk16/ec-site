@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->string('name')->default('名無しさん');
+            $table->string('name');
             $table->integer('score')->unsigned();
             $table->text('comment');
             $table->timestamps();

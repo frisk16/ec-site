@@ -20,9 +20,13 @@
                 <h3 class="title my-1">{{ $product->name }}</h3>
             </div>
             <div class="card card-body shadow">
-                <h5 class="m-0">
-                    評価：
-                    <span>☆☆☆☆☆</span>
+                <h5>
+                    総合評価：
+                    <span class="score-area">
+                        <span class="text-warning score"></span>
+                        <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
+                        <span class="score-point">{{ $product->review_score }}</span>
+                    </span>
                 </h5>
 
                 <hr>
@@ -88,17 +92,21 @@
             <div class="card card-body shadow">
                 <h1 class="title fs-4">レビュー</h1>
                 <h5>
-                    評価
-                    <span>☆☆☆☆☆</span>
+                    総合評価：
+                    <span class="score-area">
+                        <span class="text-warning score"></span>
+                        <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
+                        <span class="score-point">{{ $product->review_score }}</span>
+                    </span>
                 </h5>
                 <hr>
                 <div class="row mt-3">
-                    <div class="col-lg-6">
-                        <form action="" method="post">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <form action="{{ route('products.review', $product) }}" method="post">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-form-label col-lg-3 text-lg-end">
-                                    ニックネーム
+                                    名前 (任意)
                                 </label>
                                 <div class="col-lg-7"> 
                                     <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="名無しさん" value="{{ old('name') }}">
@@ -136,17 +144,42 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row mt-5">
+                            <div class="form-group row mt-4">
                                 <div class="col-lg-10">
-                                    <button type="submit" class="btn btn-primary w-100">投稿する</button>
+                                    @auth
+                                        @if(Auth::user()->reviews()->exists())
+                                        <span class="btn btn-primary w-100 disabled">既に投稿済みです</span>
+                                        @else
+                                        <button type="submit" class="btn btn-primary w-100">投稿する</button>
+                                        @endif
+                                    @else
+                                    <span class="btn btn-secondary w-100 disabled">ログイン後に投稿可能</span>
+                                    @endauth
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="col-lg-6">
+                        <h5 class="title">投稿一覧</h5>
                         @if($reviews->exists())
-                            @foreach($reviews->get() as $review)
-                            
+                            @foreach($reviews->latest()->get() as $review)
+                            <div class="card card-body mb-3">
+                                <h5 class="title text-primary mb-0">{{ $review->name }}</h5>
+                                <p>
+                                    評価：
+                                    <span class="text-warning score">{{ str_repeat('★', $review->score) }}</span>
+                                </p>
+                                <p class="my-3 ms-3">
+                                    {!! nl2br($review->comment) !!}
+                                </p>
+                                <p class="text-end">
+                                    <i class="fa-regular fa-clock"></i>
+                                    投稿時刻：
+                                    <span class="text-success fw-bold">
+                                        {{ $review->created_at }}
+                                    </span>
+                                </p>
+                            </div>
                             @endforeach
                         @else       
                         <h5 class="text-center text-secondary my-5">
