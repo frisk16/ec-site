@@ -41,12 +41,10 @@
 
             <div class="row justify-content-start">
                 @foreach($products as $product)
-                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div class="col-6 col-lg-4 col-xl-3 mb-4">
                     <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
                         <div class="card product-card shadow">
-                            <div class="card-body card-img">
-                                <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid">
-                            </div>
+                            <img src="{{ $storage->url($product->image) }}" alt="" class="card-img-top">
                             <div class="card-title">
                                 <strong>{{ $product->name }}</strong>
                             </div>

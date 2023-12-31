@@ -10,7 +10,6 @@
     --septenary-color: #ddd;
 
     --topic-img-size: 320px;
-    --product-card-size: 560px;
 }
 
 /* ----- Theme Colors ----- */
@@ -118,6 +117,10 @@ a:hover {
     border-radius: 0 !important;
 }
 
+.card-img-top {
+    border-radius: 0 !important;
+}
+
 .card-header {
     border-radius: 0 !important;
     color: #fff !important;
@@ -211,17 +214,6 @@ a:hover {
 
 
 /* ----- Product Page ----- */
-.product-card {
-    height: var(--product-card-size) !important;
-}
-
-.product-card > .card-img {
-    height: 75% !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: hidden;
-}
 
 .product-card > .card-title {
     padding: 8px;
@@ -296,10 +288,6 @@ a:hover {
 
     #topic-carousel img {
         height: calc(var(--topic-img-size) / 2);
-    }
-
-    .product-card {
-        height: calc(var(--product-card-size) / 1.25) !important;
     }
 
 }
