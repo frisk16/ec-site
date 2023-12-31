@@ -51,7 +51,7 @@
                                 <strong>{{ $product->name }}</strong>
                             </div>
                             <div class="card-body">
-                                <h5 class="text-danger">￥{{ $product->price }}円</h5>
+                                <h5 class="text-danger">￥{{ number_format($product->price) }}円</h5>
                                 <p>
                                     送料：
                                     @if($product->carriage_flag)

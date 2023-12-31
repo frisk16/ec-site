@@ -32,7 +32,7 @@
                 <hr>
 
                 <h1>
-                    <span class="text-danger fs-2 fw-bold">￥{{ $product->price }}円</span>
+                    <span class="text-danger fs-2 fw-bold">￥{{ number_format($product->price) }}円</span>
                     <small>（税込）</small>
                 </h1>
                 <h4>
@@ -46,15 +46,34 @@
                     </span>
                 </h4>
 
-                <form action="" method="post" class="row justify-content-end mt-3">
+                @auth
+                <form action="{{ route('favorites.toggle') }}" method="post" class="row justify-content-end mt-3">
                     @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="form-group col-lg-6">
+                        @if(Auth::user()->favorites()->where('product_id', $product->id)->exists())
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="fa-solid fa-heart-crack"></i>
+                            お気に入り解除
+                        </button>
+                        @else
                         <button type="submit" class="btn btn-outline-danger w-100">
                             <i class="fa-solid fa-heart"></i>
                             お気に入り追加
                         </button>
+                        @endif
                     </div>
                 </form>
+                @else
+                <div class="row justify-content-end mt-3">
+                    <div class="col-lg-6">
+                        <a href="{{ route('login') }}" class="btn btn-outline-danger w-100">
+                            <i class="fa-solid fa-heart"></i>
+                            お気に入り追加
+                        </a>
+                    </div>
+                </div>
+                @endauth
 
                 <hr>
 
@@ -123,9 +142,9 @@
                                     評価
                                 </label>
                                 <div class="col-lg-7"> 
-                                    <select name="score" id="score" class="form-select">
+                                    <select name="score" id="score" class="form-select text-warning">
                                         @for($i = 5; $i >= 1; $i--)
-                                        <option value="{{ $i }}">{{ str_repeat('★', $i) }}</option>
+                                        <option value="{{ $i }}">{{ str_repeat('★', $i).' '.$i }}</option>
                                         @endfor
                                     </select>
                                 </div>

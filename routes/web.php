@@ -10,6 +10,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VerifyTokenController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,4 +90,11 @@ Route::controller(ProductController::class)
     ->group(function() {
         Route::get('products/{product}', 'show')->name('products.show');
         Route::post('products/{product}/review', 'review')->name('products.review');
+    });
+
+// お気に入り操作関連
+Route::controller(FavoriteController::class)->middleware(['auth', 'verified'])
+    ->group(function() {
+        Route::get('favorites', 'index')->name('favorites.index');
+        Route::post('favorites/toggle', 'toggle_favorite')->name('favorites.toggle');
     });

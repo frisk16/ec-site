@@ -59,6 +59,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-6 card card-body shadow">
                         <a href="{{ route('mypage.edit_info') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
@@ -141,6 +142,32 @@
                         @endif
 
                     </div>
+                </div>
+
+                <div class="row justify-content-center mt-3">
+                    <div class="col-6 card card-body shadow">
+                        <a href="{{ route('favorites.index') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                            <span class="pe-2">
+                                <i class="fa-4x fa-solid fa-heart"></i>
+                            </span>
+                            <span class="w-100">
+                                <p class="title mb-2">お気に入り</p>
+                                <small>お気に入り登録商品一覧</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-6 card card-body shadow">
+                        <a href="#" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                            <span class="pe-2">
+                                <i class="fa-4x fa-solid fa-cart-shopping"></i>
+                            </span>
+                            <span class="w-100">
+                                <p class="title mb-2">ショッピングカート</p>
+                                <small>購入手続きはこちらから</small>
+                            </span>
+                        </a>
+                    </div>
+
                 </div>
 
                 <div class="row justify-content-center mt-3">

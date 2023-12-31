@@ -88,7 +88,7 @@
                     </a>
                 </li>
                 <li class="nav-item me-2">
-                    <a href="" class="nav-link p-0">
+                    <a href="{{ route('favorites.index') }}" class="nav-link p-0">
                         <i class="fa-solid fa-heart"></i>
                         お気に入り
                     </a>
@@ -177,7 +177,7 @@
                                             <div class="col-12">
                                                 <select name="price" id="price" class="form-select">
                                                     @for($i = 1000; $i <= 22000; $i += 3000)
-                                                        <option value="{{ $i }}">〜￥{{ $i }}円まで</option>
+                                                        <option value="{{ $i }}">〜￥{{ number_format($i) }}円まで</option>
                                                     @endfor
                                                 </select>
                                             </div>

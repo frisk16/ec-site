@@ -47,6 +47,11 @@
                 </form>
             </div>
 
+            <div class="mt-5 text-center">
+                <p>※登録はこちらから</p>
+                <a href="{{ route('register') }}" class="btn btn-success w-100">会員登録申請</a>
+            </div>
+
             @if (Route::has('password.request'))
             <div class="text-center mt-3">
                 <a class="btn btn-link" href="{{ route('password.request') }}">パスワードを忘れた方はこちら</a>
