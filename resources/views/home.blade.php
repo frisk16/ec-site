@@ -51,7 +51,7 @@
 
 <div class="container mb-5">
     <div class="card card-body">
-        <h1 class="title">新着商品</h1>
+        <h3 class="title">新着商品</h3>
         <div class="row justify-content-center">
 
             @foreach($new_top10_products as $product)
@@ -68,20 +68,20 @@
 
 <div class="bg-secondary mb-5">
     <div class="container text-light py-3">
-        <h1 class="top-title">商品を探す</h1>
+        <h3 class="top-title">商品を探す</h3>
 
-        <div class="row justify-content-between">
+        <div class="row justify-content-start">
 
-        @foreach($major_categories as $major)
+            @foreach($major_categories as $major)
             <div class="col-4 mb-4">
-                <h5>{{ $major->name }}</h5>
+                <h5 class="title2">{{ $major->name }}</h5>
                 <ul class="ms-2">
                 @foreach($major->categories()->get() as $category)
                     <li><a href="{{ route('categories.show', $category) }}" class="text-light text-decoration-none">{{ $category->name }} ({{ $category->products()->count() }})</a></li>
                 @endforeach
                 </ul>
             </div>
-        @endforeach
+            @endforeach
 
         </div>
     </div>
@@ -89,7 +89,7 @@
 
 <div class="container mb-5">
     <div class="card card-body">
-        <h1 class="title">本日のおすすめ</h5>
+        <h3 class="title">本日のおすすめ</h5>
         <div class="row justify-content-center">
 
             @foreach($recommend_products as $product)

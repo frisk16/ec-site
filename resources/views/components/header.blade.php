@@ -144,7 +144,7 @@
                                             @foreach($major_category->categories()->get() as $category)
                                             <div class="d-flex flex-wrap ms-2">
                                                 <a href="{{ route('categories.show', $category) }}">
-                                                    {{ $category->name }} ({{ $category->products()->count() }})
+                                                    {{ $category->name }} ({{ $category->products()->where('public_flag', true)->count() }})
                                                 </a>
                                             </div>
                                             @endforeach

@@ -13,18 +13,20 @@
         <div class="d-none d-lg-block col-lg-3 col-xl-2">
             <div class="card shadow">
                 <div class="card-header bg-senary">
-                    <h5 class="my-1">カテゴリー 一覧</h5>
+                    <h5 class="my-1 fw-bold">カテゴリー 一覧</h5>
                 </div>
                 <div class="card-body">
                     <ul>
                         @foreach($major_categories as $major)
                         <li class="mt-4">
-                            <h4>{{ $major->name }}</h4>
-                            @foreach($major->categories()->get() as $ctg)
-                            <h5 class="ms-2">
-                                <a href="{{ route('categories.show', $ctg) }}">{{ $ctg->name }} ({{ $ctg->products()->count() }})</a>
-                            </h5>
-                            @endforeach
+                            <h5 class="m-0 fw-bold">{{ $major->name }}</h5>
+                            <ul class="ms-2">
+                                @foreach($major->categories()->get() as $ctg)
+                                <li>
+                                    <a href="{{ route('categories.show', $ctg) }}">{{ $ctg->name }} ({{ $ctg->products()->where('public_flag', true)->count() }})</a>
+                                </li>
+                                @endforeach
+                            </ul>
                         </li>
                         @endforeach
                     </ul>
@@ -36,7 +38,7 @@
         <div class="col-md-11 col-lg-9 col-xl-10">
             
             <div class="card card-header mb-3 bg-senary shadow">
-                <h3 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $category->products()->count() }}品</span></h3>
+                <h4 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $category->products()->count() }}品</span></h4>
             </div>
 
             <div class="row justify-content-start">
@@ -53,7 +55,7 @@
                                 <p>
                                     送料：
                                     @if($product->carriage_flag)
-                                        <span class="text-success">￥500円</span>
+                                        <span class="text-success">￥300円</span>
                                     @else
                                         <span class="text-success">無し</span>
                                     @endif
