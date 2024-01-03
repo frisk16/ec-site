@@ -17,7 +17,7 @@
         {{-- 詳細情報エリア --}}
         <div class="col-lg-8 mb-3">
             <div class="card card-header bg-senary mb-3 shadow">
-                <h3 class="title my-1">{{ $product->name }}</h3>
+                <h5 class="title my-1">{{ $product->name }}</h5>
             </div>
             <div class="card card-body shadow">
                 <h5>

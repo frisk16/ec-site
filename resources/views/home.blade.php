@@ -19,9 +19,9 @@
 {{-- Topics --}}
 <div id="topic-carousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
     <ul class="carousel-indicators">
-        <li data-bs-target="#topic-carousel" data-bs-slide-to="0" aria-current="true" class="active"></li>
-        <li data-bs-target="#topic-carousel" data-bs-slide-to="1"></li>
-        <li data-bs-target="#topic-carousel" data-bs-slide-to="2"></li>
+        @for($i = 0; $i < $topics->count(); $i++)
+        <li data-bs-target="#topic-carousel" data-bs-slide-to="{{ $i }}" @if($i === 0) aria-current="true" class="active" @endif></li>
+        @endfor
     </ul>
 
     <div class="carousel-inner">
@@ -52,10 +52,10 @@
 <div class="container mb-5">
     <div class="card card-body">
         <h3 class="title">新着商品</h3>
-        <div class="row justify-content-center">
+        <div class="row justify-content-start">
 
             @foreach($new_top10_products as $product)
-            <div class="col-6 col-md-4 mb-3">
+            <div class="col-4 col-md-3 mb-3">
                 <a href="{{ route('products.show', $product) }}">
                     <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow" alt="">
                 </a>
@@ -90,10 +90,10 @@
 <div class="container mb-5">
     <div class="card card-body">
         <h3 class="title">本日のおすすめ</h5>
-        <div class="row justify-content-center">
+        <div class="row justify-content-start">
 
             @foreach($recommend_products as $product)
-            <div class="col-6 col-md-4 mb-3">
+            <div class="col-4 col-md-3 mb-3">
                 <a href="{{ route('products.show', $product) }}">
                     <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid shadow">
                 </a>

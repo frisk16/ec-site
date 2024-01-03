@@ -38,8 +38,12 @@ class UserController extends AdminController
         $grid->column('phone_number', __('Phone number'));
         $grid->column('cancel_flag', __('Cancel flag'));
         $grid->column('deleted_flag', __('Deleted flag'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Created at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
+        $grid->column('updated_at', __('Updated at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
 
         return $grid;
     }

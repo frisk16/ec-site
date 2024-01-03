@@ -31,8 +31,8 @@ class HomeController extends Controller
         $topics = Topic::where('public_flag', true)->latest()->limit(3)->get();
         $major_categories = MajorCategory::all();
         $products = Product::where('public_flag', true);
-        $new_top10_products = $products->latest()->limit(6)->get();
-        $recommend_products = $products->where('recommend_flag', true)->orderBy('updated_at', 'DESC')->limit(6)->get();
+        $new_top10_products = $products->latest()->limit(8)->get();
+        $recommend_products = $products->where('recommend_flag', true)->orderBy('updated_at', 'DESC')->limit(8)->get();
 
         return view('home', compact('storage', 'topics', 'major_categories', 'new_top10_products', 'recommend_products'));
     }

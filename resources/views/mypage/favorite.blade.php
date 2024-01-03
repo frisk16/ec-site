@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-10">
+        <div class="col-md-10">
             
             <h5 class="title">お気に入り一覧</h5>
             <strong>全{{ $favorites->count() }}件</strong>

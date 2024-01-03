@@ -30,8 +30,12 @@ class CategoryController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('major_category.name', '親カテゴリー');
         $grid->column('name', __('Name'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Created at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
+        $grid->column('updated_at', __('Updated at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
 
         return $grid;
     }

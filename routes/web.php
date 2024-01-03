@@ -11,6 +11,7 @@ use App\Http\Controllers\VerifyTokenController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,4 +98,10 @@ Route::controller(FavoriteController::class)->middleware(['auth', 'verified'])
     ->group(function() {
         Route::get('favorites', 'index')->name('favorites.index');
         Route::post('favorites/toggle', 'toggle_favorite')->name('favorites.toggle');
+    });
+
+// ショッピングカート
+Route::controller(CartController::class)->middleware(['auth', 'verified'])
+    ->group(function() {
+        Route::get('carts', 'index')->name('carts.index');
     });

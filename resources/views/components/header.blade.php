@@ -94,7 +94,7 @@
                     </a>
                 </li>
                 <li class="nav-item me-2">
-                    <a href="" class="nav-link p-0">
+                    <a href="{{ route('carts.index') }}" class="nav-link p-0">
                         <i class="fa-solid fa-cart-shopping"></i>
                         カート
                     </a>

@@ -24,6 +24,11 @@ class Product extends Model
         return $this->hasMany(Favorite::class);
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     public function getReviewScoreAttribute()
     {
         $total_score = 0;

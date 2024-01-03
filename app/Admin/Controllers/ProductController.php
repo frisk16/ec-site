@@ -35,8 +35,12 @@ class ProductController extends AdminController
         $grid->column('carriage_flag', '送料')->editable('select', ['0' => '無', '1' => '有']);
         $grid->column('recommend_flag', 'おすすめ')->editable('select', ['0' => '無', '1' => '有']);
         $grid->column('public_flag', '公開')->editable('select', ['0' => '非公開', '1' => '可']);
-        $grid->column('created_at', __('Created at'))->sortable();
-        $grid->column('updated_at', __('Updated at'))->sortable();
+        $grid->column('created_at', __('Created at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
+        $grid->column('updated_at', __('Updated at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        })->sortable();
 
         return $grid;
     }

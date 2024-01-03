@@ -157,7 +157,7 @@
                         </a>
                     </div>
                     <div class="col-6 card card-body shadow">
-                        <a href="#" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('carts.index') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-cart-shopping"></i>
                             </span>
