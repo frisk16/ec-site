@@ -16,8 +16,18 @@ class CartController extends Controller
     {
         $storage = Storage::disk('s3');
         $carts = Auth::user()->carts()->latest()->get();
+        $sub_total_price = 0;
+        $carriage = false;
+        $total_qty = 0;
+        foreach($carts as $cart) {
+            $sub_total_price += $cart->product->price * $cart->qty;
+            $total_qty += $cart->qty;
+            if($cart->product->carriage_flag) {
+                $carriage = true;
+            }
+        }
 
-        return view('mypage.cart', compact('storage', 'carts'));
+        return view('mypage.cart', compact('storage', 'carts', 'sub_total_price', 'carriage', 'total_qty'));
     }
 
     /**
@@ -25,7 +35,28 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id = Auth::id();
+        $product_id = $request->input('product_id');
+        $qty = $request->input('qty');
+        if($qty === null) {
+            $qty = 1;
+        }
+
+        $added_product = Cart::where('user_id', $user_id)->where('product_id', $product_id);
+
+        if($added_product->exists()) {
+            $cart = $added_product->first();
+            $cart->qty += $qty;
+            $cart->update();
+        } else {
+            $cart = new Cart();
+            $cart->user_id = $user_id;
+            $cart->product_id = $product_id;
+            $cart->qty = $qty;
+            $cart->save();
+        }
+        
+        return back()->with('success_msg', 'カートに追加しました');
     }
 
     /**
@@ -33,7 +64,11 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        $qty = $request->input('qty');
+        $cart->qty = $qty;
+        $cart->update();
+
+        return back();
     }
 
     /**
@@ -41,6 +76,8 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $cart->delete();
+
+        return back();
     }
 }

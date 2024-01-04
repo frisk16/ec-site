@@ -83,14 +83,19 @@
 
                 <hr>
 
-                <form action="" method="post">
+                <form action="{{ route('carts.store') }}" method="post">
                     @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="form-group row justify-content-end align-items-center mb-3">
                         <label for="qty" class="col-2 text-end">
                             数量
                         </label>
-                        <div class="col-2">
-                            <input type="number" class="form-control" name="qty" id="qty" value="1" min="1" required>
+                        <div class="col-3 col-md-2">
+                            <select name="qty" id="qty" class="form-select form-select-sm">
+                                @for($i = 1; $i <= 10; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row justify-content-end">
@@ -166,7 +171,7 @@
                             <div class="form-group row mt-4">
                                 <div class="col-lg-10">
                                     @auth
-                                        @if(Auth::user()->reviews()->exists())
+                                        @if(Auth::user()->reviews()->where('product_id', $product->id)->exists())
                                         <span class="btn btn-primary w-100 disabled">既に投稿済みです</span>
                                         @else
                                         <button type="submit" class="btn btn-primary w-100">投稿する</button>

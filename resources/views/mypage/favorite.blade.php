@@ -37,8 +37,9 @@
                 </div>
                 <div class="col-12">
                     <div class="d-flex justify-content-end">
-                        <form action="" method="post">
+                        <form action="{{ route('carts.store') }}" method="post">
                             @csrf
+                            <input type="hidden" name="product_id" value="{{ $fav->product->id }}">
                             <button type="submit" class="btn btn-primary btn-sm me-1">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 カートに追加

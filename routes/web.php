@@ -104,4 +104,7 @@ Route::controller(FavoriteController::class)->middleware(['auth', 'verified'])
 Route::controller(CartController::class)->middleware(['auth', 'verified'])
     ->group(function() {
         Route::get('carts', 'index')->name('carts.index');
+        Route::post('carts', 'store')->name('carts.store');
+        Route::put('carts/{cart}', 'update')->name('carts.update');
+        Route::delete('carts/{cart}', 'destroy')->name('carts.destroy');
     });
