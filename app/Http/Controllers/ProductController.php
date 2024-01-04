@@ -22,7 +22,7 @@ class ProductController extends Controller
         return view('products.show', compact('storage', 'product', 'reviews'));
     }
 
-    public function review(Product $product, ReviewRequest $request)
+    public function store_review(Product $product, ReviewRequest $request)
     {
         $user = Auth::user();
 
@@ -39,5 +39,17 @@ class ProductController extends Controller
         $review->save();
 
         return back()->with('success_msg', 'レビューを投稿しました');
+    }
+
+    public function show_review(Product $product)
+    {
+        $storage = Storage::disk('s3');
+        $reviews = $product->reviews()->latest()->get();
+
+        if($product->reviews()->doesntExist()) {
+            return back();
+        }
+
+        return view('products.review', compact('product', 'reviews', 'storage'));
     }
 }

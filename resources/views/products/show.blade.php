@@ -126,7 +126,7 @@
                 <hr>
                 <div class="row mt-3">
                     <div class="col-lg-6 mb-5 mb-lg-0">
-                        <form action="{{ route('products.review', $product) }}" method="post">
+                        <form action="{{ route('products.store_review', $product) }}" method="post">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-form-label col-lg-3 text-lg-end">
@@ -186,7 +186,7 @@
                     <div class="col-lg-6">
                         <h5 class="title">投稿一覧</h5>
                         @if($reviews->exists())
-                            @foreach($reviews->latest()->get() as $review)
+                            @foreach($reviews->latest()->limit(3)->get() as $review)
                             <div class="card card-body mb-3">
                                 <h5 class="title text-primary mb-0">{{ $review->name }}</h5>
                                 <p>
@@ -205,6 +205,13 @@
                                 </p>
                             </div>
                             @endforeach
+
+                            @if($reviews->count() > 3)
+                            <a href="{{ route('products.show_review', $product) }}">
+                                <i class="fa-solid fa-comment-dots"></i>
+                                全てのレビューを見る
+                            </a>
+                            @endif
                         @else       
                         <h5 class="text-center text-secondary my-5">
                             <i class="fa-5x fa-solid fa-comment-slash"></i>

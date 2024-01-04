@@ -50,19 +50,35 @@
 </div>
 
 <div class="container mb-5">
-    <div class="card card-body">
-        <h3 class="title">新着商品</h3>
-        <div class="row justify-content-start">
-
-            @foreach($new_top10_products as $product)
-            <div class="col-4 col-md-3 mb-3">
-                <a href="{{ route('products.show', $product) }}">
-                    <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow" alt="">
-                </a>
+    <div class="row">
+        <div class="col-6">
+            <div class="card card-body">
+                <h3 class="title">新着商品</h3>
+                <div class="row justify-content-start">
+                    @foreach($new_products as $product)
+                    <div class="col-6 mb-3">
+                        <a href="{{ route('products.show', $product) }}">
+                            <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow" alt="">
+                        </a>
+                    </div>
+                    @endforeach
+                </div>   
             </div>
-            @endforeach
-
-        </div>   
+        </div>
+        <div class="col-6">
+            <div class="card card-body">
+                <h3 class="title">人気商品</h3>
+                <div class="row justify-content-start">
+                    @foreach($pop_products as $product)
+                    <div class="col-6 mb-3">
+                        <a href="{{ route('products.show', $product->id) }}">
+                            <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow">
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

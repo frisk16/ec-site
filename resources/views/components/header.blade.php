@@ -114,7 +114,7 @@
                         <div class="col-md-10 mb-3">
 
                             <div class="row justify-content-between align-items-center">
-                                <div class="col-10">
+                                <div class="col-9">
                                     <form action="" method="get" class="search-form d-flex">
                                         <input type="text" name="" id="" class="form-control" placeholder="商品名">
                                         <button type="submit" class="btn btn-primary">
@@ -122,7 +122,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                <div class="col-2 text-end">
+                                <div class="col-3 text-end">
                                     <a href="#" data-bs-dismiss="modal">
                                         <i class="fa-solid fa-circle-xmark"></i>
                                         閉じる
@@ -182,7 +182,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row justify-content-end mt-3">
+                                        <div class="form-group row justify-content-end mt-5">
                                             <div class="col-lg-4">
                                                 <button type="submit" class="btn btn-primary btn-sm w-100">検索</button>
                                             </div>

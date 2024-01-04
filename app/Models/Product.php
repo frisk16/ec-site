@@ -44,4 +44,15 @@ class Product extends Model
 
         return $current_score;
     }
+
+    public function getReviewCountAttribute()
+    {
+        if($this->reviews()->exists()) {
+            $count = $this->reviews()->count();
+        } else {
+            $count = 0;
+        }
+
+        return $count;
+    }
 }

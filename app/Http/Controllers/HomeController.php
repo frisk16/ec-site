@@ -30,11 +30,23 @@ class HomeController extends Controller
         $storage = Storage::disk('s3');
         $topics = Topic::where('public_flag', true)->latest()->limit(3)->get();
         $major_categories = MajorCategory::all();
+
         $products = Product::where('public_flag', true);
-        $new_top10_products = $products->latest()->limit(8)->get();
+        $new_products = $products->latest()->limit(4)->get();
         $recommend_products = $products->where('recommend_flag', true)->orderBy('updated_at', 'DESC')->limit(8)->get();
 
-        return view('home', compact('storage', 'topics', 'major_categories', 'new_top10_products', 'recommend_products'));
+        $pop_products = [];
+        $cnt = 0;
+        foreach(Product::where('public_flag', true)->latest()->get() as $product) {
+            if($product->review_score >= 4 && $product->review_count >= 5) {
+                if($cnt < 4) {
+                    $pop_products[] = $product;
+                }
+                $cnt++;
+            }
+        }
+        
+        return view('home', compact('storage', 'topics', 'major_categories', 'new_products', 'pop_products', 'recommend_products'));
     }
 
     public function reset_complete()

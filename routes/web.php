@@ -90,7 +90,8 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::controller(ProductController::class)
     ->group(function() {
         Route::get('products/{product}', 'show')->name('products.show');
-        Route::post('products/{product}/review', 'review')->name('products.review');
+        Route::get('products/{product}/review', 'show_review')->name('products.show_review');
+        Route::post('products/{product}/review', 'store_review')->name('products.store_review');
     });
 
 // お気に入り操作関連
