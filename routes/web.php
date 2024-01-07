@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,4 +109,13 @@ Route::controller(CartController::class)->middleware(['auth', 'verified'])
         Route::post('carts', 'store')->name('carts.store');
         Route::put('carts/{cart}', 'update')->name('carts.update');
         Route::delete('carts/{cart}', 'destroy')->name('carts.destroy');
+    });
+
+// 注文内容、確認ページ
+Route::controller(OrderController::class)->middleware(['auth', 'verified'])
+    ->group(function() {
+        Route::get('orders', 'index')->name('orders.index');
+        Route::post('orders', 'store')->name('orders.store');
+        Route::get('orders/confirm', 'confirm')->name('orders.confirm');
+        Route::get('orders/complete', 'complete')->name('orders.complete');
     });

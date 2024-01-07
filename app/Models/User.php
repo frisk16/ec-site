@@ -100,4 +100,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+
+    // Attributes
+    public function getFullNameAttribute()
+    {
+        return $this->last_name.$this->first_name;
+    }
+
+    public function getFullPostalCodeAttribute()
+    {
+        return substr($this->postal_code, 0, 3).'-'.substr($this->postal_code, 3, 4);
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return $this->area.' '.$this->address;
+    }
 }

@@ -19,15 +19,17 @@ class Customer extends Model
         return $this->hasMany(Subscription::class);
     }
 
+
+    // Attributes
     public function getBrandIconAttribute()
     {
         $icons = [
-            'Visa' => 'fa-brands fa-cc-visa',
-            'MasterCard' => 'fa-brands fa-cc-mastercard',
-            'JCB' => 'fa-brands fa-cc-jcb',
-            'American Express' => 'fa-brands fa-cc-amex',
-            'Diners Club' => 'fa-brands fa-cc-diners-club',
-            'Discover' => 'fa-brands fa-cc-discover',
+            'Visa' => 'text-primary fa-brands fa-cc-visa',
+            'MasterCard' => 'text-tertiary fa-brands fa-cc-mastercard',
+            'JCB' => 'text-success fa-brands fa-cc-jcb',
+            'American Express' => 'text-quinary fa-brands fa-cc-amex',
+            'Diners Club' => 'text-primary fa-brands fa-cc-diners-club',
+            'Discover' => 'text-tertiary fa-brands fa-cc-discover',
         ];
 
         if(empty($icons[$this->brand])) {

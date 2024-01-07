@@ -191,7 +191,10 @@
                                 <h5 class="title text-primary mb-0">{{ $review->name }}</h5>
                                 <p>
                                     評価：
-                                    <span class="text-warning score">{{ str_repeat('★', $review->score) }}</span>
+                                    <span class="score-area">
+                                        <span class="text-warning score">{{ str_repeat('★', $review->score) }}</span>
+                                        <span class="score-point">{{ $review->score }}</span>
+                                    </span>
                                 </p>
                                 <p class="my-3 ms-3">
                                     {!! nl2br($review->comment) !!}

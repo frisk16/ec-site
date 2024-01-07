@@ -22,12 +22,13 @@
                     <div class="mt-3">
                         <h5 class="fw-bold">
                             <i class="fa-solid fa-triangle-exclamation"></i>
-                            全{{ $total_qty }}商品が入っています
+                            全{{ $carts->count() }}商品が入っています
                         </h5>
                     </div>
                     @if($carts->first())
                     <div class="mt-3">
                         <h5>
+                            <i class="fa-solid fa-truck"></i>
                             送料：
                             <strong class="text-success fs-5">
                                 @if($carriage)
@@ -40,10 +41,17 @@
                     </div>
                     @endif
                     <div class="mt-3">
-                        <a href="#" class="btn btn-primary w-100 @if(!$carts->first()) disabled @endif)">
+                        @if(Auth::user()->customers()->exists())
+                        <a href="{{ route('verify.index', ['type' => 'order']) }}" class="btn btn-primary w-100 @if(!$carts->first()) disabled @endif)">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             購入手続きへ進む
                         </a>
+                        @else
+                        <span class="btn btn-secondary disabled w-100">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            クレジットカードが登録されていません
+                        </span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -64,6 +72,7 @@
                         <p class="mb-3">追加日時：{{ $cart->created_at }}</p>
                         <h1 class="fs-4 mb-0 text-danger fw-bold">￥{{ number_format($cart->product->price) }}円<small>(税込)</small></h1>
                         <strong class="text-success">
+                            <i class="fa-solid fa-truck"></i>
                             送料：
                             @if($cart->product->carriage_flag)
                                 ￥300円

@@ -18,16 +18,14 @@ class CartController extends Controller
         $carts = Auth::user()->carts()->latest()->get();
         $sub_total_price = 0;
         $carriage = false;
-        $total_qty = 0;
         foreach($carts as $cart) {
             $sub_total_price += $cart->product->price * $cart->qty;
-            $total_qty += $cart->qty;
             if($cart->product->carriage_flag) {
                 $carriage = true;
             }
         }
 
-        return view('mypage.cart', compact('storage', 'carts', 'sub_total_price', 'carriage', 'total_qty'));
+        return view('mypage.cart', compact('storage', 'carts', 'sub_total_price', 'carriage'));
     }
 
     /**

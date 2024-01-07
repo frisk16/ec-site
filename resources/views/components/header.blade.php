@@ -95,7 +95,15 @@
                 </li>
                 <li class="nav-item me-2">
                     <a href="{{ route('carts.index') }}" class="nav-link p-0">
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i class="fa-solid fa-cart-shopping">
+                            @auth
+                                @if(Auth::user()->carts()->exists())
+                                <span class="text-warning">
+                                    {{ Auth::user()->carts()->count() }}
+                                </span>
+                                @endif
+                            @endauth
+                        </i>
                         カート
                     </a>
                 </li>

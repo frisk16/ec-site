@@ -29,6 +29,13 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
+    public function ordered_products()
+    {
+        return $this->hasMany(OrderedProduct::class);
+    }
+    
+
+    // Attributes
     public function getReviewScoreAttribute()
     {
         $total_score = 0;
