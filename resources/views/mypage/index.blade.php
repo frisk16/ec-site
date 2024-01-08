@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="col-6 card card-body shadow">
-                        <a href="{{ route('mypage.edit_info') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('mypage.edit_info') }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-user-pen"></i>
                             </span>
@@ -72,7 +72,7 @@
                         </a>
                     </div>
                     <div class="col-6 card card-body shadow">
-                        <a href="{{ route('mypage.edit_password') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('mypage.edit_password') }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-unlock"></i>
                             </span>
@@ -83,7 +83,7 @@
                         </a>
                     </div>
                     <div class="col-6 card card-body shadow">
-                        <a href="{{ route('verify.index', ['type' => 'customer']) }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('verify.index', ['type' => 'customer']) }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-credit-card"></i>
                             </span>
@@ -108,7 +108,7 @@
                                         </span>
                                     </div>
                                 @else
-                                    <a href="{{ route('verify.index', ['type' => 'cancel_subscription']) }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                                    <a href="{{ route('verify.index', ['type' => 'cancel_subscription']) }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                                         <span class="pe-2">
                                             <i class="fa-4x fa-solid fa-person-walking-dashed-line-arrow-right"></i>
                                         </span>
@@ -119,7 +119,7 @@
                                     </a>
                                 @endif
                             @else
-                                <a href="{{ route('verify.index', ['type' => 'subscription']) }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto text-tertiary">
+                                <a href="{{ route('verify.index', ['type' => 'subscription']) }}" class="card-link d-flex justify-content-between align-items-center my-auto text-tertiary">
                                     <span class="pe-2">
                                         <i class="fa-4x fa-solid fa-address-card"></i>
                                     </span>
@@ -146,7 +146,7 @@
 
                 <div class="row justify-content-center mt-3">
                     <div class="col-6 card card-body shadow">
-                        <a href="{{ route('favorites.index') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('favorites.index') }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-heart"></i>
                             </span>
@@ -157,7 +157,7 @@
                         </a>
                     </div>
                     <div class="col-6 card card-body shadow">
-                        <a href="{{ route('carts.index') }}" class="mypage-btn d-flex justify-content-between align-items-center my-auto">
+                        <a href="{{ route('carts.index') }}" class="card-link d-flex justify-content-between align-items-center my-auto">
                             <span class="pe-2">
                                 <i class="fa-4x fa-solid fa-cart-shopping"></i>
                             </span>
@@ -167,13 +167,35 @@
                             </span>
                         </a>
                     </div>
+                    <div class="col-6 card card-body shadow">
+                        <a href="{{ route('orders.index') }}" class="card-link d-flex justify-content-between align-items-center my-auto">
+                            <span class="pe-2">
+                                <i class="fa-4x fa-solid fa-clipboard-list"></i>
+                            </span>
+                            <span class="w-100">
+                                <p class="title mb-2">注文履歴</p>
+                                <small>過去の購入履歴の確認</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-6 card card-body shadow">
+                        <a href="" class="card-link d-flex justify-content-between align-items-center my-auto">
+                            <span class="pe-2">
+                                
+                            </span>
+                            <span class="w-100">
+                                <p class="title mb-2"></p>
+                                <small></small>
+                            </span>
+                        </a>
+                    </div>
 
                 </div>
 
                 <div class="row justify-content-center mt-3">
                     <div class="col-md-10">
                         <div class="card card-body shadow">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal" class="mypage-btn d-flex justify-content-center align-items-center my-auto">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal" class="card-link d-flex justify-content-center align-items-center my-auto">
                                 <span class="pe-2">
                                     <i class="fa-4x fa-solid fa-door-open"></i>
                                 </span>

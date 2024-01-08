@@ -26,7 +26,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Auth::user()->orders()->latest()->get();
+
+        return view('orders.index', compact('orders'));
     }
 
     public function confirm(Request $request)
@@ -152,30 +154,13 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
-    }
+        if(Auth::user()->orders()->where('id', $order->id)->doesntExist()) {
+            return back();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
+        $storage = Storage::disk('s3');
+        $items = $order->ordered_products()->latest()->get();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
-    {
-        //
+        return view('orders.show', compact('storage', 'order', 'items'));
     }
 }

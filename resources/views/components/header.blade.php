@@ -82,7 +82,7 @@
 
             <ul class="navbar-nav me-auto">
                 <li class="nav-item me-2">
-                    <a href="" class="nav-link p-0">
+                    <a href="{{ route('orders.index') }}" class="nav-link p-0">
                         <i class="fa-solid fa-clipboard-list"></i>
                         注文履歴
                     </a>

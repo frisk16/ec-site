@@ -151,13 +151,9 @@ a:hover {
     border-radius: 4px !important;
 }
 
-.mypage-btn {
+.card-link {
     text-decoration: none;
     color: var(--senary-color);
-}
-
-.mypage-btn:hover {
-    opacity: 0.7;
 }
 
 .search-form {
