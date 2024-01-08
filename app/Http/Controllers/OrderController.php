@@ -80,7 +80,7 @@ class OrderController extends Controller
         ]);
         
         if($charge) {
-            $order_code = sub_str(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 20);
+            $order_code = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 20);
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'order_code' => $order_code,
@@ -96,12 +96,12 @@ class OrderController extends Controller
             if($order) {
                 $carts = Auth::user()->carts()->get();
                 foreach($carts as $cart) {
-                    OrderedProduct::create([
-                        'order_id' => $order->id,
-                        'product_id' => $cart->product_id,
-                        'total_qty' => $cart->qty,
-                        'total_price' => $cart->product->price * $cart->qty,
-                    ]);
+                    $ordered_product = new OrderedProduct();
+                    $ordered_product->order_id = $order->id;
+                    $ordered_product->product_id = $cart->product_id;
+                    $ordered_product->total_qty = $cart->qty;
+                    $ordered_product->total_price = $cart->product->price * $cart->qty;
+                    $ordered_product->save();
                     $cart->delete();
                 }
             } else {
@@ -142,8 +142,9 @@ class OrderController extends Controller
         }
 
         $order_code = $request->order_code;
+        $order = Order::where('order_code', $order_code)->first();
         
-        return view('orders.complete', compact('order_code'));
+        return view('orders.complete', compact('order_code', 'order'));
     }
 
     /**
