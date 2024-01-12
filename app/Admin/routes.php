@@ -6,6 +6,8 @@ use App\Admin\Controllers\MajorCategoryController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\ProductController;
 use App\Admin\Controllers\TopicController;
+use App\Admin\Controllers\OrderController;
+use App\Admin\Controllers\OrderedProductController;
 
 Admin::routes();
 
@@ -23,5 +25,7 @@ Route::group([
     $router->resource('categories', CategoryController::class);
     $router->resource('products', ProductController::class);
     $router->resource('topics', TopicController::class);
+    $router->resource('orders', OrderController::class);
+    $router->resource('ordered_products', OrderedProductController::class);
 
 });

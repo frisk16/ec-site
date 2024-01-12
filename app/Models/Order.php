@@ -31,4 +31,15 @@ class Order extends Model
     {
         return $this->hasMany(OrderedProduct::class);
     }
+
+    public function getAllCompletedAttribute()
+    {
+        $completed_flag = false;
+        $items = $this->ordered_products();
+        if($items->where('completed_flag', false)->doesntExist()) {
+            $completed_flag = true;
+        }
+
+        return $completed_flag;
+    }
 }

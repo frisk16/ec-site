@@ -163,4 +163,16 @@ class OrderController extends Controller
 
         return view('orders.show', compact('storage', 'order', 'items'));
     }
+
+    public function cancel_order(OrderedProduct $item)
+    {
+        if(!$item->cancel_flag) {
+            $item->cancel_flag = true;
+            $item->update();
+        } else {
+            return back();
+        }
+
+        return back()->with('success_msg', 'キャンセルを受け付けました');
+    }
 }

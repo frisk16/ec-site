@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('carriage');
             $table->integer('total_qty');
             $table->integer('total_price');
-            $table->boolean('cancel_flag')->default(false);
             $table->timestamps();
         });
     }

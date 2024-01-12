@@ -116,7 +116,8 @@ Route::controller(OrderController::class)->middleware(['auth', 'verified'])
     ->group(function() {
         Route::get('orders', 'index')->name('orders.index');
         Route::post('orders', 'store')->name('orders.store');
-        Route::get('orders/{order}', 'show')->name('orders.show');
         Route::get('orders/confirm', 'confirm')->name('orders.confirm');
         Route::get('orders/complete', 'complete')->name('orders.complete');
+        Route::get('orders/{order}', 'show')->name('orders.show');
+        Route::put('orders/{item}/cancel', 'cancel_order')->name('orders.cancel');
     });

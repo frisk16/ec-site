@@ -14,14 +14,28 @@
 
             @foreach($orders as $order)
             <div class="card shadow mb-3">
+
+                @if($order->all_completed)
                 <div class="card-header bg-quinary">
-                    <h5 class="my-1">
-                        <i class="fa-regular fa-clock"></i>
-                        購入日時：{{ $order->created_at }}
+                    <h5 class="fw-bold my-1">
+                        完了
                     </h5>
                 </div>
+                @else
+                <div class="card-header bg-secondary">
+                    <h5 class="fw-bold my-1">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        未完了商品あり
+                    </h5>
+                </div>
+                @endif
+
                 <div class="card-body">
-                    <h5 class="title">注文コード：{{ $order->order_code }}</h5>
+                    <h5 class="title mb-0">注文コード：{{ $order->order_code }}</h5>
+                    <p class="mb-3 fw-bold text-success">
+                        <i class="fa-regular fa-clock"></i>
+                        購入日時：{{ $order->created_at }}
+                    </p>
                     <div class="mb-3">
                         <h5 class="title mb-0">
                             <i class="fa-solid fa-sack-dollar"></i>
