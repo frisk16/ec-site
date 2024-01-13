@@ -5,8 +5,8 @@
                 {{ config('app.name', 'Laravel') }}
             </a>
             <div class="me-auto">
-                <form class="search-form" action="" method="get">
-                    <input type="text" name="" id="" class="form-control" placeholder="商品名">
+                <form class="search-form" action="{{ route('products.search') }}" method="get">
+                    <input type="text" name="keyword" class="form-control" placeholder="商品名" value="{{ old('keyword', request()->keyword) }}">
                     <button type="submit" class="btn btn-primary border">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -123,8 +123,8 @@
 
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-9">
-                                    <form action="" method="get" class="search-form d-flex">
-                                        <input type="text" name="" id="" class="form-control" placeholder="商品名">
+                                    <form action="{{ route('products.search') }}" method="get" class="search-form d-flex">
+                                        <input type="text" name="keyword" class="form-control" placeholder="商品名" value="{{ old('keyword', request()->keyword) }}">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </button>
@@ -161,38 +161,50 @@
                                     </ul>
                                 </div>
                                 <div class="col-lg-6 mt-4">
-                                    <h6 class="title mb-2">条件で絞る</h6>
+                                    <h6 class="title mb-2">さらに条件で絞る</h6>
 
-                                    <form action="" method="get">
+                                    <form action="{{ route('products.search') }}" method="get">
+                                        <div class="form-group row mt-3">
+                                            <label for="keyword" class="col-12">
+                                                商品名
+                                            </label>
+                                            <div class="col-12">
+                                                <input type="text" name="keyword" id="keyword" class="form-control" placeholder="全て" value="{{ old('keyword', request()->keyword) }}">
+                                            </div>
+                                        </div>
                                         <div class="form-group row mt-3">
                                             <label for="category_id" class="col-12">
                                                 カテゴリー
                                             </label>
                                             <div class="col-12">
                                                 <select name="category_id" id="category_id" class="form-select">
-
+                                                    <option value="">-- 全て --</option>
                                                     @foreach(App\Models\Category::all() as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    <option value="{{ $category->id }}" @if(request()->category_id == $category->id) selected @endif>{{ $category->name }}</option>
                                                     @endforeach
 
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row mt-3">
-                                            <label for="price" class="col-12">
+                                            <label for="max_price" class="col-12">
                                                 最大価格
                                             </label>
                                             <div class="col-12">
-                                                <select name="price" id="price" class="form-select">
-                                                    @for($i = 1000; $i <= 22000; $i += 3000)
-                                                        <option value="{{ $i }}">〜￥{{ number_format($i) }}円まで</option>
+                                                <select name="max_price" id="max_price" class="form-select">
+                                                    <option value="{{ App\Models\Product::max('price') }}">-- 上限無し --</option>
+                                                    @for($i = 25000; $i >= 5000; $i -= 5000)
+                                                        <option value="{{ $i }}" @if(request()->max_price == $i) selected @endif>〜￥{{ number_format($i) }}円まで</option>
                                                     @endfor
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row justify-content-end mt-5">
                                             <div class="col-lg-4">
-                                                <button type="submit" class="btn btn-primary btn-sm w-100">検索</button>
+                                                <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                    検索
+                                                </button>
                                             </div>
                                         </div>
                                     </form>

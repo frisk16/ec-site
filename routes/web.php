@@ -87,9 +87,10 @@ Route::controller(VerifyTokenController::class)->middleware(['auth', 'verified']
 // 商品カテゴリー
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
-// 各商品ページ
+// 商品関連
 Route::controller(ProductController::class)
     ->group(function() {
+        Route::get('products/search', 'search')->name('products.search');
         Route::get('products/{product}', 'show')->name('products.show');
         Route::get('products/{product}/review', 'show_review')->name('products.show_review');
         Route::post('products/{product}/review', 'store_review')->name('products.store_review');
