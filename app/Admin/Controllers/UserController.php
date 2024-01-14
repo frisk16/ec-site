@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -26,24 +27,48 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->column('id', __('Id'));
-        $grid->column('role_id', __('Role Id'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('role.name', '分類');
         $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('last_name', __('Last name'));
-        $grid->column('first_name', __('First name'));
-        $grid->column('age', __('Age'));
-        $grid->column('postal_code', __('Postal code'));
-        $grid->column('area', __('Area'));
-        $grid->column('phone_number', __('Phone number'));
-        $grid->column('cancel_flag', __('Cancel flag'));
-        $grid->column('deleted_flag', __('Deleted flag'));
+        $grid->column('email_verified_at', __('Email verified at'))->display(function($time) {
+            return date('Y/m/d H:i:s', strtotime($time));
+        });
+        $grid->column('氏名')->display(function() {
+            return $this->last_name.' '.$this->first_name;
+        });
+        $grid->column('age', '年齢')->sortable();
+        $grid->column('postal_code', '郵便番号');
+        $grid->column('area', '都道府県');
+        $grid->column('phone_number', '電話番号');
+        $grid->column('cancel_flag', '有料解約')->editable('select', ['0' => '無し', '1' => '解約']);
+        $grid->column('deleted_flag', '登録解除')->editable('select', ['0' => '無し', '1' => '解除']);
         $grid->column('created_at', __('Created at'))->display(function($time) {
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
         $grid->column('updated_at', __('Updated at'))->display(function($time) {
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
+
+        $grid->disableCreateButton();
+        $grid->actions(function($actions) {
+            $actions->disableDelete();
+        });
+
+        $grid->filter(function($filter) {
+            $filter->disableIdFilter();
+            $filter->equal('role_id', '会員分類')->radio(['' => '全て', '1' => '無料', '2' => '有料']);
+            $filter->like('email', 'Email');
+            $filter->where(function($query) {
+                $query->where('last_name', 'LIKE', "%{$this->input}%")
+                    ->orWhere('first_name', 'LIKE', "%{$this->input}%");
+            }, '氏名');
+            $filter->between('age', '年齢')->integer();
+            $filter->like('postal_code', '郵便番号')->integer();
+            $filter->in('area', '都道府県')->multipleSelect(User::all()->pluck('area', 'area'));
+            $filter->like('phone_number', '電話番号')->integer();
+            $filter->equal('cancel_flag', '有料解約')->select(['0' => '無し', '1' => '解約']);
+            $filter->equal('deleted_flag', '登録解除')->select(['0' => '無し', '1' => '解除']);
+        });
 
         return $grid;
     }
@@ -76,6 +101,10 @@ class UserController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
+        $show->panel()->tools(function($tools) {
+            $tools->disableDelete();
+        });
+
         return $show;
     }
 
@@ -88,11 +117,9 @@ class UserController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->number('role_id', __('Role id'))->default(1);
+        $form->radio('role_id', '会員分類')->options(['1' => '無料', '2' => '有料']);
         $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
         $form->text('last_name', __('Last name'));
         $form->text('first_name', __('First name'));
         $form->number('age', __('Age'));
@@ -102,6 +129,18 @@ class UserController extends AdminController
         $form->text('phone_number', __('Phone number'));
         $form->switch('cancel_flag', __('Cancel flag'));
         $form->switch('deleted_flag', __('Deleted flag'));
+
+        $form->tools(function($tools) {
+            $tools->disableDelete();
+        });
+
+        $form->saving(function(Form $form) {
+            if($form->password && $form->model()->password != $form->password) {
+                $form->password = bcrypt($form->password);
+            } else {
+                $form->password = $form->model()->password;
+            }
+        });
 
         return $form;
     }

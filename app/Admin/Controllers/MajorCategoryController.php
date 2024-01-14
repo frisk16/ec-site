@@ -35,26 +35,31 @@ class MajorCategoryController extends AdminController
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
 
+        $grid->actions(function($actions) {
+            $actions->disableView();
+            $actions->disableDelete();
+        });
+
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(MajorCategory::findOrFail($id));
+    // /**
+    //  * Make a show builder.
+    //  *
+    //  * @param mixed $id
+    //  * @return Show
+    //  */
+    // protected function detail($id)
+    // {
+    //     $show = new Show(MajorCategory::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+    //     $show->field('id', __('Id'));
+    //     $show->field('name', __('Name'));
+    //     $show->field('created_at', __('Created at'));
+    //     $show->field('updated_at', __('Updated at'));
 
-        return $show;
-    }
+    //     return $show;
+    // }
 
     /**
      * Make a form builder.
@@ -66,6 +71,11 @@ class MajorCategoryController extends AdminController
         $form = new Form(new MajorCategory());
 
         $form->text('name', __('Name'));
+
+        $form->tools(function($tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
 
         return $form;
     }

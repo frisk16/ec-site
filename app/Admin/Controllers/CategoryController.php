@@ -27,7 +27,7 @@ class CategoryController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('major_category.name', '親カテゴリー');
         $grid->column('name', __('Name'));
         $grid->column('created_at', __('Created at'))->display(function($time) {
@@ -37,27 +37,38 @@ class CategoryController extends AdminController
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
 
+        $grid->actions(function($actions) {
+            $actions->disableView();
+            $actions->disableDelete();
+        });
+
+        $grid->filter(function($filter) {
+            $filter->disableIdFilter();
+            $filter->in('major_category_id', '親カテゴリー')->multipleSelect(MajorCategory::all()->pluck('name', 'id'));
+            $filter->like('name', 'Name');
+        });
+
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(Category::findOrFail($id));
+    // /**
+    //  * Make a show builder.
+    //  *
+    //  * @param mixed $id
+    //  * @return Show
+    //  */
+    // protected function detail($id)
+    // {
+    //     $show = new Show(Category::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('major_category_id', '親カテゴリー');
-        $show->field('name', __('Name'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+    //     $show->field('id', __('Id'));
+    //     $show->field('major_category_id', '親カテゴリー');
+    //     $show->field('name', __('Name'));
+    //     $show->field('created_at', __('Created at'));
+    //     $show->field('updated_at', __('Updated at'));
 
-        return $show;
-    }
+    //     return $show;
+    // }
 
     /**
      * Make a form builder.
@@ -70,6 +81,11 @@ class CategoryController extends AdminController
 
         $form->select('major_category_id', '親カテゴリー')->options(MajorCategory::all()->pluck('name', 'id'));
         $form->text('name', __('Name'));
+
+        $form->tools(function($tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
 
         return $form;
     }

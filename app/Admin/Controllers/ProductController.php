@@ -29,18 +29,28 @@ class ProductController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('category.name', __('カテゴリー'));
-        $grid->column('name', __('Name'));
+        $grid->column('name', '商品名');
         $grid->column('image', __('Image'))->image();
-        $grid->column('price', __('Price'))->sortable();
+        $grid->column('price', '値段')->sortable();
         $grid->column('carriage_flag', '送料')->editable('select', ['0' => '無', '1' => '有']);
         $grid->column('recommend_flag', 'おすすめ')->editable('select', ['0' => '無', '1' => '有']);
-        $grid->column('public_flag', '公開')->editable('select', ['0' => 'NO', '1' => 'OK']);
+        $grid->column('public_flag', '公開')->editable('select', ['0' => 'NG', '1' => 'OK']);
         $grid->column('created_at', __('Created at'))->display(function($time) {
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
         $grid->column('updated_at', __('Updated at'))->display(function($time) {
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
+
+        $grid->filter(function($filter) {
+            $filter->disableIdFilter();
+            $filter->in('category_id', 'カテゴリー')->multipleSelect(Category::all()->pluck('name', 'id'));
+            $filter->like('name', '商品名');
+            $filter->between('price', '値段')->integer();
+            $filter->equal('carriage_flag', '送料')->radio(['' => '全て', '0' => '無', '1' => '有']);
+            $filter->equal('recommend_flag', 'おすすめ')->radio(['' => '全て', '0' => '無', '1' => '有']);
+            $filter->equal('public_flag', '公開')->radio(['' => '全て', '0' => 'NG', '1' => 'OK']);
+        });
 
         return $grid;
     }
