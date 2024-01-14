@@ -54,7 +54,7 @@ class CartController extends Controller
             $cart->save();
         }
         
-        return back()->with('success_msg', 'カートに追加しました');
+        return back()->with('cart_msg', 'カートに追加しました');
     }
 
     /**
