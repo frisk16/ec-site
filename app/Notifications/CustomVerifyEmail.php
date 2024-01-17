@@ -25,7 +25,7 @@ class CustomVerifyEmail extends VerifyEmail
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable) :array
+    public function via($notifiable)
     {
         return ['mail'];
     }
@@ -33,7 +33,7 @@ class CustomVerifyEmail extends VerifyEmail
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable) :MailMessage
+    public function toMail($notifiable)
     {
         return (new MailMessage)
                     ->line('以下のボタンから登録ページへアクセスし、引き続き手続きを行ってください。')
@@ -46,7 +46,7 @@ class CustomVerifyEmail extends VerifyEmail
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable)
     {
         return [
             //

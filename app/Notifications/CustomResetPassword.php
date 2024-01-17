@@ -26,7 +26,7 @@ class CustomResetPassword extends ResetPassword
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
+    public function via($notifiable)
     {
         return ['mail'];
     }
@@ -34,7 +34,7 @@ class CustomResetPassword extends ResetPassword
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable)
     {
         return (new MailMessage)
                     ->line('以下のボタンをクリックして、パスワード再設定ページへアクセスしてください。')
@@ -47,7 +47,7 @@ class CustomResetPassword extends ResetPassword
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable)
     {
         return [
             //
