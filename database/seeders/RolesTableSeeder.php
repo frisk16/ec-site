@@ -13,7 +13,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $names = ['ROLE_FREE', 'ROLE_PAID'];
+        $names = ['無料', '有料'];
 
         foreach($names as $name) {
             Role::create([
