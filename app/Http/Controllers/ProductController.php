@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function show_review(Product $product)
     {
         $storage = Storage::disk('s3');
-        $reviews = $product->reviews()->latest()->get();
+        $reviews = $product->reviews()->latest()->paginate(10);
 
         if($product->reviews()->doesntExist()) {
             return back();
@@ -72,14 +72,14 @@ class ProductController extends Controller
                 $max_price = $request->max_price;
                 if($category_id !== null) {
                     $category_name = Category::find($category_id)->name;
-                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
+                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
 
                 } else {
-                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
+                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
                 }
 
             } else {
-                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
+                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
            
             }
         } else {

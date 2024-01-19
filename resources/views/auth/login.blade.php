@@ -35,6 +35,11 @@
                             <small>Eメールアドレス、又はパスワードが正しくありません</small>
                         </div>
                         @endif
+                        @if(session('disabled_user'))
+                        <div class="form-group d-flex justify-content-center text-danger mt-3">
+                            <small>そのアカウントは現在無効です</small>
+                        </div>
+                        @endif
 
                     </div>
 

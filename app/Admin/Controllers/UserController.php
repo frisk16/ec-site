@@ -41,7 +41,7 @@ class UserController extends AdminController
         $grid->column('area', '都道府県');
         $grid->column('phone_number', '電話番号');
         $grid->column('cancel_flag', '有料解約')->editable('select', ['0' => '無し', '1' => '解約']);
-        $grid->column('deleted_flag', '登録解除')->editable('select', ['0' => '無し', '1' => '解除']);
+        $grid->column('deleted_flag', '状態')->editable('select', ['0' => '有効', '1' => '無効']);
         $grid->column('created_at', __('Created at'))->display(function($time) {
             return date('Y/m/d H:i:s', strtotime($time));
         })->sortable();
@@ -67,7 +67,7 @@ class UserController extends AdminController
             $filter->in('area', '都道府県')->multipleSelect(User::all()->pluck('area', 'area'));
             $filter->like('phone_number', '電話番号')->integer();
             $filter->equal('cancel_flag', '有料解約')->select(['0' => '無し', '1' => '解約']);
-            $filter->equal('deleted_flag', '登録解除')->select(['0' => '無し', '1' => '解除']);
+            $filter->equal('deleted_flag', '状態')->select(['0' => '有効', '1' => '無効']);
         });
 
         return $grid;

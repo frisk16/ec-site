@@ -71,6 +71,10 @@
                 </div>
             </div>
             @endforeach
+
+            <div class="d-flex justify-content-center py-3">
+                {{ $orders->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
 </div>

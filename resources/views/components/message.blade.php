@@ -5,6 +5,13 @@
 </div>
 @endif
 
+@if(session('disabled_user'))
+<div class="msg msg-error">
+    <i class="fa-4x fa-solid fa-triangle-exclamation"></i>
+    <p class="mt-3">{{ session('disabled_user') }}</p>
+</div>
+@endif
+
 @if(session('error_msg'))
 <div class="msg msg-error">
     <i class="fa-4x fa-solid fa-triangle-exclamation"></i>

@@ -161,6 +161,20 @@
                         <p class="text-danger fw-bold mt-3">※これ以上は追加できません</p>
                     @endif
                 @endif
+                <div class="card card-body shadow">
+                    <h6 class="title mb-3">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        登録可能なカード(テストカードのみ)
+                    </h6>
+                    <div class="d-flex justify-content-between">
+                        <i class="fa-2x text-primary fa-brands fa-cc-visa"></i>
+                        <i class="fa-2x text-tertiary fa-brands fa-cc-mastercard"></i>
+                        <i class="fa-2x text-success fa-brands fa-cc-jcb"></i>
+                        <i class="fa-2x text-quinary fa-brands fa-cc-amex"></i>
+                        <i class="fa-2x text-primary fa-brands fa-cc-diners-club"></i>
+                        <i class="fa-2x text-tertiary fa-brands fa-cc-discover"></i>
+                    </div>
+                </div>
             </div>
         </div>
 

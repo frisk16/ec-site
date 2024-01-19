@@ -73,8 +73,13 @@
                             </div>
                         </div>
                         @endforeach
-                    </div>
 
+                    </div>
+                    
+                    <div class="d-flex justify-content-center py-3">
+                        {{ $reviews->appends(request()->query())->links() }}
+                    </div>
+                    
                 </div>
             </div>
         </div>

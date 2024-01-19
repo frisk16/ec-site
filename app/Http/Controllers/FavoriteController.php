@@ -14,7 +14,7 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $favorites = Auth::user()->favorites();
+        $favorites = Auth::user()->favorites()->paginate(10);
         $storage = Storage::disk('s3');
 
         return view('mypage.favorite', compact('favorites', 'storage'));

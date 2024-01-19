@@ -15,7 +15,7 @@
 
             <hr>
 
-            @foreach($favorites->get() as $fav)
+            @foreach($favorites as $fav)
             <div class="row mb-3">
                 <div class="col-lg-3 col-4">
                     <a href="{{ route('products.show', $fav->product) }}">
@@ -59,6 +59,9 @@
             <hr>
             @endforeach
 
+            <div class="d-flex justify-content-center py-3">
+                {{ $favorites->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
 </div>

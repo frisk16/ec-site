@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class LoginController extends Controller
@@ -42,10 +43,15 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        if($user->deleted_flag == true) {
+            Auth::logout();
+            return back()->with('disabled_user', 'そのアカウントは現在無効です');
+        }
+
         $today = Carbon::now()->toDateString();
         if($user->subscriptions()->exists()) {
             $period_end_at = $user->subscriptions()->orderBy('period_end_at', 'DESC')->first()->period_end_at;
-            if($today === $period_end_at) {
+            if($today > $period_end_at) {
                 $user->role_id = 1;
                 $user->cancel_flag = false;
                 $user->update();
