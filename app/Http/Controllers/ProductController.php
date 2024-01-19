@@ -62,6 +62,7 @@ class ProductController extends Controller
         $category_name = null;
         $max_price = null;
         $keyword = null;
+        $count = 0;
         $storage = Storage::disk('s3');
 
         if($request->has('keyword')) {
@@ -72,20 +73,22 @@ class ProductController extends Controller
                 $max_price = $request->max_price;
                 if($category_id !== null) {
                     $category_name = Category::find($category_id)->name;
-                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
+                    $count = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
+                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
 
                 } else {
-                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
+                    $count = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
+                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
                 }
 
             } else {
-                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
-           
+                $count = Product::where('name', 'LIKE', '%'.$keyword.'%')->count();
+                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();           
             }
         } else {
             return back();
         }
 
-        return view('products.search', compact('products', 'max_price', 'category_name', 'storage'));
+        return view('products.search', compact('products', 'max_price', 'category_name', 'storage', 'count'));
     }
 }

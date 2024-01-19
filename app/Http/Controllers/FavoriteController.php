@@ -14,10 +14,11 @@ class FavoriteController extends Controller
      */
     public function index()
     {
+        $count = Auth::user()->favorites()->count();
         $favorites = Auth::user()->favorites()->paginate(10);
         $storage = Storage::disk('s3');
 
-        return view('mypage.favorite', compact('favorites', 'storage'));
+        return view('mypage.favorite', compact('favorites', 'storage', 'count'));
     }
 
     // 登録、削除

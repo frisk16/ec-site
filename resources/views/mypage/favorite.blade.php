@@ -11,7 +11,7 @@
         <div class="col-md-10">
             
             <h5 class="title">お気に入り一覧</h5>
-            <strong>全{{ $favorites->count() }}件</strong>
+            <strong>全{{ $count }}件</strong>
 
             <hr>
 

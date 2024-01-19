@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <h5 class="title">注文履歴</h5>
-            <p class="fs-5 fw-bold mb-3">全{{ $orders->count() }}件</p>
+            <p class="fs-5 fw-bold mb-3">全{{ $count }}件</p>
 
             @foreach($orders as $order)
             <div class="card shadow mb-3">

@@ -12,7 +12,7 @@
             <h5 class="title">注文コード：{{ $order->order_code }}</h5>
             <p class="fs-5 fw-bold">
                 <i class="fa-solid fa-box-open"></i>
-                全{{ $items->count() }}商品
+                全{{ $count }}商品
             </p>
             <hr>
 

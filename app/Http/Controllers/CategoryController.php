@@ -15,9 +15,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $major_categories = MajorCategory::all();
+        $count = $category->products()->where('public_flag', true)->count();
         $products = $category->products()->where('public_flag', true)->latest()->paginate(12);
         $storage = Storage::disk('s3');
 
-        return view('categories.show', compact('category', 'major_categories', 'products', 'storage'));
+        return view('categories.show', compact('category', 'major_categories', 'products', 'storage', 'count'));
     }
 }

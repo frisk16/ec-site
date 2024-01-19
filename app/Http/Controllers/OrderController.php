@@ -26,9 +26,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $count = Auth::user()->orders()->count();
         $orders = Auth::user()->orders()->latest()->paginate(5);
 
-        return view('orders.index', compact('orders'));
+        return view('orders.index', compact('orders', 'count'));
     }
 
     public function confirm(Request $request)
@@ -159,9 +160,10 @@ class OrderController extends Controller
         }
 
         $storage = Storage::disk('s3');
+        $count = $order->ordered_products()->count();
         $items = $order->ordered_products()->latest()->get();
 
-        return view('orders.show', compact('storage', 'order', 'items'));
+        return view('orders.show', compact('storage', 'order', 'items', 'count'));
     }
 
     public function cancel_order(OrderedProduct $item)

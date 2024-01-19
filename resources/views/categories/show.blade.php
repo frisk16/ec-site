@@ -38,7 +38,7 @@
         <div class="col-md-11 col-lg-9 col-xl-10">
             
             <div class="card card-header mb-3 bg-senary shadow">
-                <h4 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $category->products()->count() }}品</span></h4>
+                <h4 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $count }}品</span></h4>
             </div>
 
             <div class="row justify-content-start">

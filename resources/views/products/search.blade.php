@@ -66,7 +66,7 @@
 
         {{-- 商品一覧 --}}
         <div class="col-md-11 col-lg-9">
-            <h5 class="title">検索結果｜{{ $products->count() }}件</h5>
+            <h5 class="title">検索結果｜{{ $count }}件</h5>
 
             <div class="row justify-content-start">
                 @foreach($products as $product)
@@ -94,9 +94,9 @@
                 @endforeach
             </div>
 
-            <div class="d-flex justify-content-center py-3">
+            {{-- <div class="d-flex justify-content-center py-3">
                 {{ $products->appends(request()->query())->links() }}
-            </div>
+            </div> --}}
 
         </div>
     </div>
