@@ -54,7 +54,11 @@
                     <div class="row">
                         <div class="col-lg-3 col-4">
                             <a href="{{ route('products.show', $item->product) }}">
+                                @if($item->product->image)
                                 <img src="{{ $storage->url($item->product->image) }}" class="img-fluid">
+                                @else
+                                <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid">
+                                @endif
                             </a>
                         </div>
                         <div class="col-lg-9 col-8">

@@ -58,7 +58,11 @@
                     @foreach($new_products as $product)
                     <div class="col-6 mb-3">
                         <a href="{{ route('products.show', $product) }}">
+                            @if($product->image)
                             <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow" alt="">
+                            @else
+                            <img src="{{ asset('images/dummy.png') }}" class="img-fluid shadow" alt="">
+                            @endif
                         </a>
                     </div>
                     @endforeach
@@ -72,7 +76,11 @@
                     @foreach($pop_products as $product)
                     <div class="col-6 mb-3">
                         <a href="{{ route('products.show', $product->id) }}">
+                            @if($product->image)
                             <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow">
+                            @else
+                            <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid shadow">
+                            @endif
                         </a>
                     </div>
                     @endforeach
@@ -111,7 +119,11 @@
             @foreach($recommend_products as $product)
             <div class="col-4 col-md-3 mb-3">
                 <a href="{{ route('products.show', $product) }}">
+                    @if($product->image)
                     <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid shadow">
+                    @else
+                    <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid shadow">
+                    @endif
                 </a>
             </div>
             @endforeach

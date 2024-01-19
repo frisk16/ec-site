@@ -46,7 +46,13 @@
                 <div class="col-6 col-lg-4 col-xl-3 mb-4">
                     <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
                         <div class="card product-card shadow">
+
+                            @if($product->image)
                             <img src="{{ $storage->url($product->image) }}" alt="" class="card-img-top">
+                            @else
+                            <img src="{{ asset('images/dummy.png') }}" alt="" class="card-img-top">
+                            @endif
+
                             <div class="card-title">
                                 <strong>{{ $product->name }}</strong>
                             </div>

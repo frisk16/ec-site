@@ -11,7 +11,11 @@
 
         {{-- 商品画像エリア --}}
         <div class="col-lg-4 mb-3">
+            @if($product->image)
             <img src="{{ $storage->url($product->image) }}" alt="" class="img-fluid w-100 shadow">
+            @else
+            <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid w-100 shadow">
+            @endif
         </div>
 
         {{-- 詳細情報エリア --}}

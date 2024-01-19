@@ -89,11 +89,11 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->select('category_id', 'カテゴリー')->options(Category::all()->pluck('name', 'id'));
-        $form->text('name', __('Name'));
+        $form->select('category_id', 'カテゴリー')->options(Category::all()->pluck('name', 'id'))->rules('required');
+        $form->text('name', __('Name'))->rules('required|max:100');
         $form->image('image', '画像 (縦320px)')->uniqueName();
-        $form->number('price', __('Price'));
-        $form->textarea('description', '商品内容');
+        $form->number('price', __('Price'))->rules('required');
+        $form->textarea('description', '商品内容')->rules('required');
         $form->switch('carriage_flag', '送料');
         $form->switch('recommend_flag', 'おすすめ');
         $form->switch('public_flag', '公開')->default(1);

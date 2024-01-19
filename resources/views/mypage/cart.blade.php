@@ -64,7 +64,11 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-4 col-lg-3">
                         <a href="{{ route('products.show', $cart->product->id) }}">
+                            @if($cart->product->image)
                             <img src="{{ $storage->url($cart->product->image) }}" class="img-fluid">
+                            @else
+                            <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid">
+                            @endif
                         </a>
                     </div>
                     <div class="col-8 col-lg-9">

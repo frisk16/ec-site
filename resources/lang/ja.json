@@ -1,6 +1,0 @@
-{
-    "validation.exists": "登録中のEメールアドレスと一致しません",
-    "validation.min.string": "最低8文字以上で設定してください",
-    "validation.confirmed": "確認用パスワードと一致しません",
-    "passwords.token": "パスワード再設定期限を過ぎています"
-}

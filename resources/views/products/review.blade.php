@@ -11,7 +11,11 @@
         <div class="col-md-11 col-lg-10">
             <div class="row mb-3">
                 <div class="col-lg-3 col-4">
+                    @if($product->image)
                     <img src="{{ $storage->url($product->image) }}" class="img-fluid shadow">
+                    @else
+                    <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid shadow">
+                    @endif
                 </div>
                 <div class="col-lg-9 col-8">
                     <div class="card shadow">

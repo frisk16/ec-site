@@ -19,7 +19,11 @@
             <div class="row mb-3">
                 <div class="col-lg-3 col-4">
                     <a href="{{ route('products.show', $fav->product) }}">
+                        @if($fav->product->image)
                         <img src="{{ $storage->url($fav->product->image) }}" class="img-fluid">
+                        @else
+                        <img src="{{ asset('images/dummy.png') }}" alt="" class="img-fluid">
+                        @endif
                     </a>
                 </div>
                 <div class="col-lg-9 col-8">
