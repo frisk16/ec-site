@@ -68,6 +68,48 @@
         <div class="col-md-11 col-lg-9">
             <h5 class="title">検索結果｜全{{ $count }}件（ {{ $products->currentPage() }} / {{ $products->lastPage() }} ）</h5>
 
+            <span class="badge bg-success">並び替え</span>
+            <div class="d-flex justify-content-start gap-2 mb-4 mt-1">
+                <form action="" method="get">
+                    <input type="hidden" name="page" value="1">
+                    @if(request()->has('keyword'))
+                    <input type="hidden" name="keyword" value="{{ request()->keyword }}">
+                    @endif
+                    @if(request()->has('max_price'))
+                    <input type="hidden" name="max_price" value="{{ request()->max_price }}">
+                    @endif
+                    @if(request()->has('category_id'))
+                    <input type="hidden" name="category_id" value="{{ request()->category_id }}">
+                    @endif
+                    <select name="sort_price" class="form-select form-select-sm @if(request()->has('sort_price')) is-valid @endif" onChange="this.form.submit();">
+                        @if(!request()->has('sort_price'))
+                        <option value="">-- 価格 --</option>
+                        @endif
+                        <option value="asc" @if(request()->sort_price === 'asc') selected @endif>価格が安い順</option>
+                        <option value="desc" @if(request()->sort_price === 'desc') selected @endif>価格が高い順</option>
+                    </select>
+                </form>
+                <form action="" method="get">
+                    <input type="hidden" name="page" value="1">
+                    @if(request()->has('keyword'))
+                    <input type="hidden" name="keyword" value="{{ request()->keyword }}">
+                    @endif
+                    @if(request()->has('max_price'))
+                    <input type="hidden" name="max_price" value="{{ request()->max_price }}">
+                    @endif
+                    @if(request()->has('category_id'))
+                    <input type="hidden" name="category_id" value="{{ request()->category_id }}">
+                    @endif
+                    <select name="sort_update" class="form-select form-select-sm @if(request()->has('sort_update')) is-valid @endif" onChange="this.form.submit();">
+                        @if(!request()->has('sort_update'))
+                        <option value="">-- 更新日 --</option>
+                        @endif
+                        <option value="asc" @if(request()->sort_update === 'asc') selected @endif>古い順</option>
+                        <option value="desc" @if(request()->sort_update === 'desc') selected @endif>新しい順</option>
+                    </select>
+                </form>
+            </div>
+
             <div class="row justify-content-start">
                 @foreach($products as $product)
                 <div class="col-6 col-lg-4 col-xl-3 mb-4">
@@ -82,6 +124,13 @@
                             
                             <div class="card-title">
                                 <strong>{{ $product->name }}</strong>
+                            </div>
+                            <div class="card-body pt-0 pb-2">
+                                <span class="score-area mb-3">
+                                    <span class="text-warning score"></span>
+                                    <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
+                                    <span class="score-point">{{ $product->review_score }}</span>
+                                </span>
                             </div>
                             <div class="card-body">
                                 <h5 class="text-danger">￥{{ number_format($product->price) }}円</h5>

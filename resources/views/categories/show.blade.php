@@ -53,8 +53,16 @@
                             <img src="{{ asset('images/dummy.png') }}" alt="" class="card-img-top">
                             @endif
 
+                            
                             <div class="card-title">
                                 <strong>{{ $product->name }}</strong>
+                            </div>
+                            <div class="card-body pt-0 pb-2">
+                                <span class="score-area mb-3">
+                                    <span class="text-warning score"></span>
+                                    <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
+                                    <span class="score-point">{{ $product->review_score }}</span>
+                                </span>
                             </div>
                             <div class="card-body">
                                 <h5 class="text-danger">￥{{ number_format($product->price) }}円</h5>

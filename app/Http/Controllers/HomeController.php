@@ -38,7 +38,7 @@ class HomeController extends Controller
         $pop_products = [];
         $cnt = 0;
         foreach(Product::where('public_flag', true)->latest()->get() as $product) {
-            if($product->review_score >= 4 && $product->review_count >= 5) {
+            if($product->review_score >= 4 && $product->review_count >= 3) {
                 if($cnt < 4) {
                     $pop_products[] = $product;
                 }
