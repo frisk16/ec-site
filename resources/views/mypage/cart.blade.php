@@ -42,10 +42,18 @@
                     @endif
                     <div class="mt-3">
                         @if(Auth::user()->customers()->exists())
-                        <a href="{{ route('verify.index', ['type' => 'order']) }}" class="btn btn-primary w-100 @if(!$carts->first()) disabled @endif)">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            購入手続きへ進む
-                        </a>
+                            @if($carts->first())
+                                @if($is_public)
+                                <a href="{{ route('verify.index', ['type' => 'order']) }}" class="btn btn-primary w-100">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    購入手続きへ進む
+                                </a>
+                                @else
+                                <span class="btn btn-primary w-100 disabled">購入できない商品が含まれています</span>
+                                @endif
+                            @else
+                            <span class="btn btn-secondary w-100 disabled">商品がありません</span>
+                            @endif
                         @else
                         <span class="btn btn-secondary disabled w-100">
                             <i class="fa-solid fa-triangle-exclamation"></i>

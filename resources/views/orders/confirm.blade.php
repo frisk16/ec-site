@@ -131,32 +131,34 @@
                 <h5 class="title">注文内容の確認</h5>
 
                 @foreach($carts as $cart)
-                <div class="row justify-content-center mt-3">
-                    <div class="col-4 col-lg-3">
-                        <a href="{{ route('products.show', $cart->product->id) }}">
-                            <img src="{{ $storage->url($cart->product->image) }}" class="img-fluid">
-                        </a>
+                    @if($cart->product->public_flag)
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-4 col-lg-3">
+                            <a href="{{ route('products.show', $cart->product->id) }}">
+                                <img src="{{ $storage->url($cart->product->image) }}" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="col-8 col-lg-9">
+                            <h5 class="title mb-0">{{ $cart->product->name }}</h5>
+                            <p class="mb-3">追加日時：{{ $cart->created_at }}</p>
+                            <h1 class="fs-4 mb-0 text-danger fw-bold">￥{{ number_format($cart->product->price) }}円<small>(税込)</small></h1>
+                            <strong class="text-success">
+                                <i class="fa-solid fa-truck"></i>
+                                送料：
+                                @if($cart->product->carriage_flag)
+                                    ￥300円
+                                @else
+                                    無料
+                                @endif
+                            </strong>
+                            <p class="fw-bold">
+                                <i class="fa-solid fa-box-open"></i>
+                                数量：{{ $cart->qty }}
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-8 col-lg-9">
-                        <h5 class="title mb-0">{{ $cart->product->name }}</h5>
-                        <p class="mb-3">追加日時：{{ $cart->created_at }}</p>
-                        <h1 class="fs-4 mb-0 text-danger fw-bold">￥{{ number_format($cart->product->price) }}円<small>(税込)</small></h1>
-                        <strong class="text-success">
-                            <i class="fa-solid fa-truck"></i>
-                            送料：
-                            @if($cart->product->carriage_flag)
-                                ￥300円
-                            @else
-                                無料
-                            @endif
-                        </strong>
-                        <p class="fw-bold">
-                            <i class="fa-solid fa-box-open"></i>
-                            数量：{{ $cart->qty }}
-                        </p>
-                    </div>
-                </div>
-                <hr>
+                    <hr>
+                    @endif
                 @endforeach
 
             </div>

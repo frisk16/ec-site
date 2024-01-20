@@ -15,6 +15,7 @@ class CartController extends Controller
     public function index()
     {
         $storage = Storage::disk('s3');
+        $is_public = true;
         $carts = Auth::user()->carts()->latest()->get();
         $sub_total_price = 0;
         $carriage = false;
@@ -24,10 +25,12 @@ class CartController extends Controller
                 if($cart->product->carriage_flag) {
                     $carriage = true;
                 }
+            } else {
+                $is_public = false;
             }
         }
 
-        return view('mypage.cart', compact('storage', 'carts', 'sub_total_price', 'carriage'));
+        return view('mypage.cart', compact('storage', 'carts', 'sub_total_price', 'carriage', 'is_public'));
     }
 
     /**

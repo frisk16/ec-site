@@ -57,10 +57,12 @@ class OrderController extends Controller
         $total_qty = 0;
         $carriage = false;
         foreach($carts as $cart) {
-            $total_price += $cart->product->price * $cart->qty;
-            $total_qty += $cart->qty;
-            if($cart->product->carriage_flag) {
-                $carriage = true;
+            if($cart->product->public_flag) {
+                $total_price += $cart->product->price * $cart->qty;
+                $total_qty += $cart->qty;
+                if($cart->product->carriage_flag) {
+                    $carriage = true;
+                }
             }
         }
         if($carriage) {
@@ -99,13 +101,15 @@ class OrderController extends Controller
             if($order) {
                 $carts = Auth::user()->carts()->get();
                 foreach($carts as $cart) {
-                    $ordered_product = new OrderedProduct();
-                    $ordered_product->order_id = $order->id;
-                    $ordered_product->product_id = $cart->product_id;
-                    $ordered_product->total_qty = $cart->qty;
-                    $ordered_product->total_price = $cart->product->price * $cart->qty;
-                    $ordered_product->save();
-                    $cart->delete();
+                    if($cart->product->public_flag) {
+                        $ordered_product = new OrderedProduct();
+                        $ordered_product->order_id = $order->id;
+                        $ordered_product->product_id = $cart->product_id;
+                        $ordered_product->total_qty = $cart->qty;
+                        $ordered_product->total_price = $cart->product->price * $cart->qty;
+                        $ordered_product->save();
+                        $cart->delete();
+                    }
                 }
             } else {
                 return back()->with('error_msg', 'エラーが発生しました、管理人にお問い合わせください');
