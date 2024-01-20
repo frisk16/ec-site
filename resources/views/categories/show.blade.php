@@ -41,6 +41,30 @@
                 <h4 class="title my-1">{{ $category->name }}｜<span class="fw-normal">全{{ $count }}品</span></h4>
             </div>
 
+            <span class="badge bg-success">並び替え</span>
+            <div class="d-flex justify-content-start gap-2 mb-4 mt-1">
+                <form action="" method="get">
+                    <input type="hidden" name="page" value="1">
+                    <select name="sort_price" class="form-select form-select-sm @if(request()->has('sort_price')) is-valid @endif" onChange="this.form.submit();">
+                        @if(!request()->has('sort_price'))
+                        <option value="">-- 価格 --</option>
+                        @endif
+                        <option value="asc" @if(request()->sort_price === 'asc') selected @endif>価格が安い順</option>
+                        <option value="desc" @if(request()->sort_price === 'desc') selected @endif>価格が高い順</option>
+                    </select>
+                </form>
+                <form action="" method="get">
+                    <input type="hidden" name="page" value="1">
+                    <select name="sort_update" class="form-select form-select-sm @if(request()->has('sort_update')) is-valid @endif" onChange="this.form.submit();">
+                        @if(!request()->has('sort_update'))
+                        <option value="">-- 更新日 --</option>
+                        @endif
+                        <option value="asc" @if(request()->sort_update === 'asc') selected @endif>古い順</option>
+                        <option value="desc" @if(request()->sort_update === 'desc') selected @endif>新しい順</option>
+                    </select>
+                </form>
+            </div>
+
             <div class="row justify-content-start">
                 @foreach($products as $product)
                 <div class="col-6 col-lg-4 col-xl-3 mb-4">

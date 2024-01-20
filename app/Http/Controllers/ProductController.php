@@ -76,44 +76,44 @@ class ProductController extends Controller
                 // カテゴリー＆最大価格
                 if($category_id !== null) {
                     $category_name = Category::find($category_id)->name;
-                    $count = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
-                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
+                    $count = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
+                    $products = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
                     // 価格順
                     if($request->has('sort_price')) {
                         if($request->sort_price === 'asc') {
-                            $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
                         } else {
-                            $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
                         }
                     }
                     // 更新順
                     if($request->has('sort_update')) {
                         if($request->sort_update === 'asc') {
-                            $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
                         } else {
-                            $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
                         }
                     }
                     
                 // *****
                 // 最大価格のみ
                 } else {
-                    $count = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
-                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
+                    $count = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
+                    $products = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
                     // 価格順
                     if($request->has('sort_price')) {
                         if($request->sort_price === 'asc') {
-                            $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
                         } else {
-                            $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
                         }
                     }
                     // 更新順
                     if($request->has('sort_update')) {
                         if($request->sort_update === 'asc') {
-                            $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
                         } else {
-                            $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
+                            $products = Product::where('public_flag', true)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
                         }
                     }
                 }
@@ -121,22 +121,22 @@ class ProductController extends Controller
             // *****
             // 条件なし
             } else {
-                $count = Product::where('name', 'LIKE', '%'.$keyword.'%')->count();
-                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);           
+                $count = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->count();
+                $products = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);           
                 // 価格順
                 if($request->has('sort_price')) {
                     if($request->sort_price === 'asc') {
-                        $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
+                        $products = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'ASC')->paginate(12);
                     } else {
-                        $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
+                        $products = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('price', 'DESC')->paginate(12);
                     }
                 }
                 // 更新順
                 if($request->has('sort_update')) {
                     if($request->sort_update === 'asc') {
-                        $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
+                        $products = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'ASC')->paginate(12);
                     } else {
-                        $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
+                        $products = Product::where('public_flag', true)->where('name', 'LIKE', '%'.$keyword.'%')->orderBy('updated_at', 'DESC')->paginate(12);
                     }
                 }
             }
