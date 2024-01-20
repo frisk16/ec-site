@@ -101,7 +101,7 @@
                 <h5 class="title2">{{ $major->name }}</h5>
                 <ul class="ms-2">
                 @foreach($major->categories()->get() as $category)
-                    <li><a href="{{ route('categories.show', $category) }}" class="text-light text-decoration-none">{{ $category->name }} ({{ $category->products()->count() }})</a></li>
+                    <li><a href="{{ route('categories.show', $category) }}" class="text-light text-decoration-none">{{ $category->name }} ({{ $category->products()->where('public_flag', true)->count() }})</a></li>
                 @endforeach
                 </ul>
             </div>

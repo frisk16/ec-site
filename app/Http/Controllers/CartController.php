@@ -19,9 +19,11 @@ class CartController extends Controller
         $sub_total_price = 0;
         $carriage = false;
         foreach($carts as $cart) {
-            $sub_total_price += $cart->product->price * $cart->qty;
-            if($cart->product->carriage_flag) {
-                $carriage = true;
+            if($cart->product->public_flag) {
+                $sub_total_price += $cart->product->price * $cart->qty;
+                if($cart->product->carriage_flag) {
+                    $carriage = true;
+                }
             }
         }
 

@@ -17,6 +17,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if(!$product->public_flag) {
+            return back();
+        }
+
         $storage = Storage::disk('s3');
         $reviews = $product->reviews();
         

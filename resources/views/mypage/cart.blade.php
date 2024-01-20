@@ -61,9 +61,10 @@
             @if(Auth::user()->carts()->exists())
                 <hr>
                 @foreach($carts as $cart)
+
                 <div class="row justify-content-center mt-3">
                     <div class="col-4 col-lg-3">
-                        <a href="{{ route('products.show', $cart->product->id) }}">
+                        <a href="{{ route('products.show', $cart->product->id) }}" @if(!$cart->product->public_flag) onClick="return false;" @endif>
                             @if($cart->product->image)
                             <img src="{{ $storage->url($cart->product->image) }}" class="img-fluid">
                             @else
@@ -72,8 +73,20 @@
                         </a>
                     </div>
                     <div class="col-8 col-lg-9">
+
+                        @if($cart->product->public_flag)
                         <h5 class="title mb-0">{{ $cart->product->name }}</h5>
+                        @else
+                        <p class="fw-bold text-danger">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            現在購入できません
+                        </p>
+                        <h5 class="title mb-0 text-secondary">{{ $cart->product->name }}</h5>
+                        @endif
+
                         <p class="mb-3">追加日時：{{ $cart->created_at }}</p>
+
+                        @if($cart->product->public_flag)
                         <h1 class="fs-4 mb-0 text-danger fw-bold">￥{{ number_format($cart->product->price) }}円<small>(税込)</small></h1>
                         <strong class="text-success">
                             <i class="fa-solid fa-truck"></i>
@@ -84,6 +97,8 @@
                                 無料
                             @endif
                         </strong>
+                        @endif
+
                         <div class="row justify-content-between align-items-center mt-3">
                             <div class="col-lg-6">
                                 <form action="{{ route('carts.update', $cart) }}" method="post" class="row align-items-center">
@@ -97,7 +112,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-8 col-md-5 col-lg-7 col-xl-6">
-                                        <button type="submit" class="btn btn-success btn-sm w-100">
+                                        <button type="submit" class="btn btn-success btn-sm w-100" @if(!$cart->product->public_flag) onClick="return false;" @endif>
                                             <i class="fa-solid fa-cart-arrow-down"></i>
                                             数量を変更
                                         </button>
