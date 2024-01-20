@@ -65,7 +65,7 @@ class ProductController extends Controller
         $count = 0;
         $storage = Storage::disk('s3');
 
-        if($request->has('keyword')) {
+        if($request->has('keyword') || $request->has('page')) {
             $keyword = $request->keyword;
 
             if($request->has('category_id') && $request->has('max_price')) {
@@ -74,16 +74,16 @@ class ProductController extends Controller
                 if($category_id !== null) {
                     $category_name = Category::find($category_id)->name;
                     $count = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
-                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
+                    $products = Product::where('category_id', $category_id)->where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
 
                 } else {
                     $count = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->count();
-                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();
+                    $products = Product::where('price', '<=', $max_price)->where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);
                 }
 
             } else {
                 $count = Product::where('name', 'LIKE', '%'.$keyword.'%')->count();
-                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->get();           
+                $products = Product::where('name', 'LIKE', '%'.$keyword.'%')->latest()->paginate(12);           
             }
         } else {
             return back();
