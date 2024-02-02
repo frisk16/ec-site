@@ -307,6 +307,11 @@ a:hover {
     object-fit: cover;
 }
 
+.fav-heart {
+    color: #f0f;
+    transition: 0.3s color;
+}
+
 
 /* ---------------------- */
 /* ----- Phone Size ----- */

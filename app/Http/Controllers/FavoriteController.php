@@ -29,15 +29,37 @@ class FavoriteController extends Controller
 
         if($current_favorite->exists()) {
             $current_favorite->first()->delete();
-
+            
             return back();
         } else {
             $new_favorite = new Favorite();
             $new_favorite->user_id = Auth::id();
             $new_favorite->product_id = $product_id;
             $new_favorite->save();
-
+            
             return back();
+        }
+    }
+
+    // 登録、削除（json形式）
+    public function json_toggle_favorite(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $current_favorite = Favorite::where('user_id', Auth::id())->where('product_id', $product_id);
+
+        if($current_favorite->exists()) {
+            $current_favorite->first()->delete();
+            $data = ['success' => true];
+
+            return response()->json($data);
+        } else {
+            $new_favorite = new Favorite();
+            $new_favorite->user_id = Auth::id();
+            $new_favorite->product_id = $product_id;
+            $new_favorite->save();
+            $data = ['success' => true];
+            
+            return response()->json($data);
         }
     }
 }

@@ -101,6 +101,7 @@ Route::controller(FavoriteController::class)->middleware(['auth', 'verified'])
     ->group(function() {
         Route::get('favorites', 'index')->name('favorites.index');
         Route::post('favorites/toggle', 'toggle_favorite')->name('favorites.toggle');
+        Route::post('favorites/json_toggle', 'json_toggle_favorite');
     });
 
 // ショッピングカート

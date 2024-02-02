@@ -68,39 +68,43 @@
             <div class="row justify-content-start">
                 @foreach($products as $product)
                 <div class="col-6 col-lg-4 col-xl-3 mb-4">
-                    <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
-                        <div class="card product-card shadow">
-
+                    <div class="card product-card shadow">
+                        <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
                             @if($product->image)
                             <img src="{{ $storage->url($product->image) }}" alt="" class="card-img-top">
                             @else
                             <img src="{{ asset('images/dummy.png') }}" alt="" class="card-img-top">
                             @endif
+                        </a>
 
                             
-                            <div class="card-title">
-                                <strong>{{ $product->name }}</strong>
+                        <div class="card-title">
+                            <strong>{{ $product->name }}</strong>
+                        </div>
+                        <div class="card-body pt-0 pb-2">
+                            <span class="score-area mb-3">
+                                <span class="text-warning score"></span>
+                                <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
+                                <span class="score-point">{{ $product->review_score }}</span>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="text-danger">￥{{ number_format($product->price) }}円</h5>
+                            <p>
+                                送料：
+                                @if($product->carriage_flag)
+                                    <span class="text-success">￥300円</span>
+                                @else
+                                    <span class="text-success">無し</span>
+                                @endif
+                            </p>
+                            @auth
+                            <div class="d-flex justify-content-end">
+                                <i class="fa-solid fa-heart fav-btn @if(Auth::user()->favorites()->where('product_id', $product->id)->exists()) fav-heart @endif" data-product-id="{{ $product->id }}" data-csrf-token="{{ csrf_token() }}"></i>
                             </div>
-                            <div class="card-body pt-0 pb-2">
-                                <span class="score-area mb-3">
-                                    <span class="text-warning score"></span>
-                                    <span class="text-warning total-score" style="width: {{ $product->review_score }}em;">　</span>
-                                    <span class="score-point">{{ $product->review_score }}</span>
-                                </span>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="text-danger">￥{{ number_format($product->price) }}円</h5>
-                                <p>
-                                    送料：
-                                    @if($product->carriage_flag)
-                                        <span class="text-success">￥300円</span>
-                                    @else
-                                        <span class="text-success">無し</span>
-                                    @endif
-                                </p>
-                            </div>
-                        </div>   
-                    </a>
+                            @endauth
+                        </div>
+                    </div>   
                 </div>
                 @endforeach
             </div>
@@ -113,4 +117,8 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/favorite.js') }}"></script>
 @endsection
