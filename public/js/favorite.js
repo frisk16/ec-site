@@ -8,7 +8,7 @@ $(function() {
             headers: { 'X-CSRF-TOKEN': csrfToken }
         });
         $.ajax({
-            url: `${location.host}/favorites/json_toggle`,
+            url: '/favorites/json_toggle',
             type: 'POST',
             cache: false,
             dataType: 'json',
